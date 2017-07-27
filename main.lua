@@ -16,7 +16,8 @@ local svgHead = '<?xml version="1.0" encoding="utf-8"?>\n' ..
                 'viewbox="0 0 ' .. page.x .. ' ' .. page.y .. '">'
 
 -- add style tag for all elements
-local svgStyle = '<style>* {fill: none; stroke-width: ' .. pen.thickness ..
+local svgStyle = '<style>* {fill: none; stroke-linecap: round;' ..
+                 'stroke-linejoin: round; stroke-width: ' .. pen.thickness ..
                  '; stroke: ' .. pen.color .. ';}</style>'
 
 -- add svg closing tag
