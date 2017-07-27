@@ -1,12 +1,8 @@
--- page config
-local page = {}
-      page.x = 297
-      page.y = 210
+-- get page config
+local page = require 'page'
 
--- page config
-local pen = {}
-      pen.thickness = 6
-      pen.color = '#226'
+-- get pen config
+local pen = require 'pen'
 
 -- use page conifg to create svg header
 local svgHead = '<?xml version="1.0" encoding="utf-8"?>\n' ..
