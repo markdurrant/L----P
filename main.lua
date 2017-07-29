@@ -1,8 +1,7 @@
--- get page config
-local page = require 'page'
-
--- get pen config
-local pen = require 'pen'
+-- get mpdules
+local  page = require 'modules/page'
+local   pen = require 'modules/pen'
+local point = require 'modules/point'
 
 -- use page conifg to create svg header
 local svgHead = '<?xml version="1.0" encoding="utf-8"?>\n' ..
@@ -18,17 +17,6 @@ local svgStyle = '<style>* {fill: none; stroke-linecap: round;' ..
 
 -- add svg closing tag
 local svgClose = '</svg>'
-
--- create a new point
-local point = function (x, y)
-  local point = {}
-        point.x = x
-        point.y = y
-        point.log = function ()
-          print("point: " .. point.x .. ", " .. point.y)
-        end
-  return point
-end
 
 -- draw a line
 local line = function (from, to)
