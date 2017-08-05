@@ -1,10 +1,11 @@
 -- get mpdules
 local   page = require 'modules/page'
 local    pen = require 'modules/pen'
+local render = require 'modules/render'
+
 local  point = require 'modules/point'
 local   path = require 'modules/path'
-local   line = require 'modules/line'
-local svgGen = require 'modules/svg-gen'
+
 
 function addToTable(table, ...)
   for k, v in pairs({...}) do
@@ -50,5 +51,5 @@ end
 --  svg body
 local svgBody = draw(myPath)
 
--- generate svg
-svgGen('svg-output/test.svg', page, pen, svgBody)
+-- render everything
+render('test', svgBody)
