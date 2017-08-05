@@ -22,34 +22,12 @@ addToTable(
   myPath.points,
   point(offset * 3, offset * 3),
   point(page.x - offset, offset),
-  point(page.x - offset, page.y - offset),
+  point(page.x - offset * 3, page.y - offset * 3),
   point(offset, page.y - offset)
 )
 
-local draw = function (path)
-  local pathElm = '<path d="'
-
-  for k, v in pairs(path.points) do
-    if k == 1 then
-      pathElm = pathElm .. 'M'
-    else
-      pathElm = pathElm .. 'L'
-    end
-
-    pathElm = pathElm .. v.x .. ' ' .. v.y .. ' '
-  end
-
-  if path.closed == true then
-    pathElm = pathElm .. 'Z'
-  end
-
-  pathElm = pathElm .. '"/>'
-
-  return pathElm
-end
-
 --  svg body
-local svgBody = draw(myPath)
+local svgBody = myPath:draw()
 
 -- render everything
 render('test', svgBody)
