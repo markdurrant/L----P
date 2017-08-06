@@ -5,6 +5,7 @@ local render = require 'modules/render'
 
 local  point = require 'modules/point'
 local   path = require 'modules/path'
+local   line = require 'modules/line'
 
 
 function addToTable(table, ...)
@@ -13,10 +14,10 @@ function addToTable(table, ...)
   end
 end
 
-local myPath = path
+local myPath = path()
       myPath.closed = true
 
-local offset = 20
+local offset = 25
 
 addToTable(
   myPath.points,
@@ -26,8 +27,10 @@ addToTable(
   point(offset, page.y - offset)
 )
 
+local myLine = line(point(10, 10), point(page.x - 10, page.y - 10))
+
 --  svg body
-local svgBody = myPath:draw()
+local svgBody = myPath:draw() .. myLine:draw()
 
 -- render everything
 render('test', svgBody)
