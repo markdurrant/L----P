@@ -15,6 +15,8 @@ local path = function ()
     for i = 1, utl.length(points) do
       table.insert(self.points, points[i])
     end
+
+    self:draw()
   end
 
   -- render the svg path element

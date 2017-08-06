@@ -19,20 +19,16 @@ local render = require 'modules/render'
 local myPath = path()
       myPath.closed = true
 
-local offset = 25
+local offset = 20
 
 myPath:addPoints(
-  point(offset * 3, offset * 3),
+  point(offset * 4, offset * 4),
   point(page.x - offset, offset),
-  point(page.x - offset * 3, page.y - offset * 3)
+  point(page.x - offset * 4, page.y - offset * 4),
+  point(offset, page.y - offset)
 )
 
-myPath:addPoints(point(offset, page.y - offset))
-
 local myLine = line(point(10, 10), point(page.x - 10, page.y - 10))
-
---  svg body
-local svgBody = myPath:draw() .. myLine:draw()
 
 -- render everything
 render('test')
