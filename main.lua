@@ -4,6 +4,7 @@ local    utl = require 'modules/utilities'
 -- config
 local   page = require 'modules/page'
 local    pen = require 'modules/pen'
+local  scene = require 'modules/scene'
 
 -- geometry
 local  point = require 'modules/point'
@@ -34,4 +35,4 @@ local myLine = line(point(10, 10), point(page.x - 10, page.y - 10))
 local svgBody = myPath:draw() .. myLine:draw()
 
 -- render everything
-render('test', svgBody)
+render('test')

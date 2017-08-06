@@ -1,4 +1,5 @@
 local    utl = require 'modules/utilities'
+local  scene = require 'modules/scene'
 
 -- create a path
 local path = function ()
@@ -7,6 +8,7 @@ local path = function ()
   this.points = {}
   this.closed = false
 
+  -- add a point
   this.addPoints = function(self, ...)
     local points = {...}
 
@@ -15,6 +17,7 @@ local path = function ()
     end
   end
 
+  -- render the svg path element
   this.draw = function (self)
     local pathContent = ''
 
@@ -33,6 +36,8 @@ local path = function ()
     end
 
     pathContent = '<path d="' .. pathContent .. '"/>"'
+
+    table.insert(scene, pathContent)
 
     return pathContent
   end
