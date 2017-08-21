@@ -9,6 +9,12 @@ function getSeed()
     end
   end
 
+  r = tonumber(r)
+
+  if r == nil then
+    r = getSeed()
+  end
+
   return tonumber(r)
 end
 

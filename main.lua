@@ -29,26 +29,9 @@ myPath:addPoints(
   point(offset, page.y - offset)
 )
 
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
-print(random.number(10, 20))
+for i = 0, 5000 do
+  print(random.number(0, 100))
+end
 
 local myLine = line(point(10, 10), point(page.x - 10, page.y - 10))
 
