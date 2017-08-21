@@ -1,5 +1,6 @@
 -- get utilities
 local    utl = require 'modules/utilities'
+local random = require 'modules/random'
 
 -- config
 local   page = require 'modules/page'
@@ -27,6 +28,8 @@ myPath:addPoints(
   point(page.x - offset * 4, page.y - offset * 4),
   point(offset, page.y - offset)
 )
+
+print(random.number(10, 20))
 
 local myLine = line(point(10, 10), point(page.x - 10, page.y - 10))
 
