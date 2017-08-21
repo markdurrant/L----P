@@ -30,8 +30,27 @@ myPath:addPoints(
 )
 
 print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
+print(random.number(10, 20))
 
 local myLine = line(point(10, 10), point(page.x - 10, page.y - 10))
 
 -- render everything
-render('test')
+-- render('test')
