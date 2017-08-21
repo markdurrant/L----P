@@ -1,3 +1,0 @@
-local scene = {}
-
-return scene
