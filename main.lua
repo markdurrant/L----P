@@ -1,37 +1,32 @@
-local log = require("modules/logTable")
+local   log = require("modules/logTable")
 
 local paper = require("modules/paper")
-local pen = require("modules/pen")
-local path = require("modules/path")
+local   pen = require("modules/pen")
+local  path = require("modules/path")
 local point = require("modules/point")
 
 paper = paper:new(297, 210)
 
-local bluePen = pen:new(5, "#09f")
-local greenPen = pen:new(2, "#0F9")
+local bluePen = pen:new(1, "#09f")
 
-local myPath = path:new()
-local myPath2 = path:new()
+local offset = 4
 
-myPath:addPoint(
-  point:new(10, 10),
-  point:new(100, 10),
-  point:new(100, 100),
-  point:new(10, 100)
-)
+for i = 1, 10 do
+  local rect = path:new()
+  local offset = offset * i
 
-myPath2:addPoint(
-  point:new(20, 20),
-  point:new(80, 20),
-  point:new(80, 80),
-  point:new(20, 80)
-)
+  rect:addPoint(
+    point:new(offset, offset),
+    point:new(paper.width - offset, offset),
+    point:new(paper.width - offset, paper.height - offset),
+    point:new(offset, paper.height - offset)
+  )
 
-myPath2.closed = true
+  rect.closed = true
 
-paper:addPen(bluePen, greenPen)
+  bluePen:addPath(rect)
+end
 
-bluePen:addPath(myPath, myPath2)
-greenPen:addPath(myPath)
+paper:addPen(bluePen)
 
-print(paper:saveTo('svg-output/testy.svg'))
+paper:saveTo('svg-output/testy.svg')
