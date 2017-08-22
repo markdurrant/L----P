@@ -5,21 +5,23 @@ local   pen = require("modules/pen")
 local  path = require("modules/path")
 local point = require("modules/point")
 
-paper = paper:new(297, 210)
+local   new = require('modules/new')
 
-local bluePen = pen:new(1, "#09f")
+paper = new:paper(297, 210)
+
+local bluePen = new:pen(1, "#09f")
 
 local offset = 4
 
 for i = 1, 10 do
-  local rect = path:new()
+  local rect = new:path()
   local offset = offset * i
 
   rect:addPoint(
-    point:new(offset, offset),
-    point:new(paper.width - offset, offset),
-    point:new(paper.width - offset, paper.height - offset),
-    point:new(offset, paper.height - offset)
+    new:point(offset, offset),
+    new:point(paper.width - offset, offset),
+    new:point(paper.width - offset, paper.height - offset),
+    new:point(offset, paper.height - offset)
   )
 
   rect.closed = true
