@@ -7,6 +7,10 @@ function point:new(x, y)
   this.x = x
   this.y = y
 
+  function this:log()
+    print("point x: %d y: %d", this.x, this.y)
+  end
+
   function this:getDistance(point)
     local a = this.x - point.x
     local b = this.y - point.y

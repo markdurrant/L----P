@@ -29,7 +29,9 @@ for i = 1, 10 do
   bluePen:addPath(rect)
 end
 
+local newPoint = new:point(100, 150)
 
+newPoint:log()
 
 paper:addPen(bluePen)
 
