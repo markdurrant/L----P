@@ -29,6 +29,8 @@ for i = 1, 10 do
   bluePen:addPath(rect)
 end
 
+
+
 paper:addPen(bluePen)
 
 paper:saveTo('svg-output/testy.svg')
