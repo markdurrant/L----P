@@ -18,10 +18,11 @@ function paper:new(width, height)
     local paperTag = ""
     local paperContent = ""
 
-    local svgHead = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" ' ..
-                    'xmlns:xlink="http://www.w3.org/1999/xlink" ' ..
-                    'width="' .. this.width .. '" height="' .. this.height .. '" ' ..
-                    'viewbox="0 0 ' .. this.width .. ' ' .. this.height .. '">'
+    local svgHead = string.format(
+      '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="%d" height="%d" viewbox="0 0 %d %d">',
+      this.width, this.height, this.width, this.height
+    )
+
 
     for k, pen in pairs(this.pens) do
       paperContent = paperContent .. pen:render()

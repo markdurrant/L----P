@@ -18,10 +18,10 @@ function pen:new(weight, color)
     local penTag = ""
     local penContent = ""
 
-    local style = 'style="stroke-width: ' .. this.weight ..
-                  '; stroke: ' .. this.color ..
-                  '; stroke-linecap: round; stroke-linejoin: round; ' ..
-                  'fill: none;"'
+    local style = string.format(
+      'style="stroke-width: %d; stroke: %s; stroke-linecap: round; stroke-linejoin: round; fill: none;"',
+      this.weight, this.color
+    )
 
     for i, path in pairs(this.paths) do
       penContent = penContent .. path:render()
