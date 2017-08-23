@@ -8,6 +8,20 @@ function paper:new(width, height)
   this.height = height
   this.pens = {}
 
+  function this:log()
+    local paperLog = string.format("PAPER, width: %d height: %d", this.width, this.height)
+
+    for k, pen in pairs(this.pens) do
+      paperLog = paperLog .. string.format('\n[%s] ', k) .. pen:log()
+    end
+
+    return paperLog
+  end
+
+  function this:print()
+    print(this:log())
+  end
+
   function this:addPen(...)
     for i, pen in ipairs({...}) do
       table.insert(this.pens, pen)
@@ -22,7 +36,6 @@ function paper:new(width, height)
       '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="%d" height="%d" viewbox="0 0 %d %d">',
       this.width, this.height, this.width, this.height
     )
-
 
     for k, pen in pairs(this.pens) do
       paperContent = paperContent .. pen:render()

@@ -7,6 +7,21 @@ function path:new()
   this.closed = false
   this.points = {}
 
+  function this:log()
+    local pathLog = string.format("PATH, closed: %s", this.closed)
+    print()
+
+    for k, point in pairs(this.points) do
+      pathLog = pathLog .. string.format("\n  [%s] ", k) .. point:log()
+    end
+
+    return pathLog
+  end
+
+  function this:print()
+    print(this:log())
+  end
+
   function this:addPoint(...)
     for i, point in pairs({...}) do
       table.insert(this.points, point)

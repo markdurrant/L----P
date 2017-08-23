@@ -7,8 +7,14 @@ function point:new(x, y)
   this.x = x
   this.y = y
 
-  function this:log()
-    print("point x: %d y: %d", this.x, this.y)
+  function this:log(returnString)
+    local pointLog = string.format("POINT, x: %d y: %d", this.x, this.y)
+
+    return pointLog
+  end
+
+  function this:print()
+    print(this:log())
   end
 
   function this:getDistance(point)

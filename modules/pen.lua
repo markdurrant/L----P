@@ -8,6 +8,20 @@ function pen:new(weight, color)
   this.color = color or "#000"
   this.paths = {}
 
+  function this:log()
+    local penLog = string.format("PEN, weight: %d color: %s", this.weight, this.color)
+
+    for k, path in pairs(this.paths) do
+      penLog = penLog .. string.format("\n[%s] ", k) .. path:log()
+    end
+
+    return penLog
+  end
+
+  function this:print()
+    print(this:log())
+  end
+
   function this:addPath(...)
     for i, path in ipairs({...}) do
       table.insert(this.paths, path)

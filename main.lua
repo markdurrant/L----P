@@ -29,10 +29,23 @@ for i = 1, 10 do
   bluePen:addPath(rect)
 end
 
-local newPoint = new:point(100, 150)
+local myPath = new:path()
 
-newPoint:log()
+myPath:addPoint(
+  new:point(offset, offset),
+  new:point(paper.width - offset, offset),
+  new:point(paper.width - offset, paper.height - offset),
+  new:point(offset, paper.height - offset)
+)
+
+-- myPath:print()
+
+-- myPath.points[1]:print()
+
+-- bluePen:print()
 
 paper:addPen(bluePen)
+
+paper:print()
 
 paper:saveTo('svg-output/testy.svg')
