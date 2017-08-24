@@ -1,8 +1,8 @@
-local path = { label = "path", points = {}, closed = false }
+local path = { label = "path" }
       path.metatable = { __index = path }
 
 function path:new(t)
-  if not t then t = {} end
+  if not t then t = { points = {}, closed = false } end
 
   setmetatable(t, path.metatable)
 
@@ -14,7 +14,7 @@ function path:log()
 
   for i, point in ipairs(self.points) do
     pathLog = pathLog .. string.format(
-      "\n  point :%s { x = %d, y = %d }",
+      "\n  point :%s { x = %s, y = %s }",
       i, point.x, point.y
     )
   end

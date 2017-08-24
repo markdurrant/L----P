@@ -1,8 +1,8 @@
-local point = { label = "point", x = 0, y = 0 }
+local point = { label = "point" }
       point.metatable = { __index = point }
 
 function point:new(t)
-  if not t then t = {} end
+  if not t then t = { x = 0, y = 0 } end
 
   setmetatable(t, point.metatable)
 
@@ -10,7 +10,7 @@ function point:new(t)
 end
 
 function point:log()
-  print(string.format("point { x = %d, y = %d }", self.x, self.y))
+  print(string.format("point { x = %s, y = %s }", self.x, self.y))
 end
 
 function point:setPath(path)
@@ -63,6 +63,19 @@ function point:getAngleTo(point)
   if angle < 0 then angle = 360 + angle end
 
   return angle
+end
+
+function point:rotate(angle, origin)
+  local radians = math.rad(angle)
+
+  local x1 = self.x - origin.x
+  local y1 = self.y - origin.y
+
+  local x2 = x1 * math.cos(radians) - y1 * math.sin(radians)
+  local y2 = x1 * math.sin(radians) + y1 * math.cos(radians)
+
+  self.x = x2 + origin.x
+  self.y = y2 + origin.y
 end
 
 return point

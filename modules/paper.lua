@@ -11,13 +11,13 @@ end
 
 function paper:log()
   local paperLog = string.format(
-    "paper { width = %d, height = %d }",
+    "paper { width = %s, height = %f }",
     self.width, self.height
   )
 
   for i, pen in ipairs(self.pens) do
     paperLog = paperLog .. string.format(
-      "\n  pen :%d { weight = %d, color = %s }",
+      "\n  pen :%d { weight = %s, color = %s }",
       i, pen.weight, pen.color
     )
 
@@ -29,7 +29,7 @@ function paper:log()
 
       for i, point in ipairs(path.points) do
         paperLog = paperLog .. string.format(
-          "\n      point :%s { x = %d, y = %d }",
+          "\n      point :%s { x = %s, y = %s }",
           i, point.x, point.y
         )
       end
@@ -51,7 +51,7 @@ function paper:render()
   local svgHead = string.format(
     '<svg version="1.1" xmlns="http://www.w3.org/2000/svg"' ..
     'xmlns:xlink="http://www.w3.org/1999/xlink"' ..
-    'width="%d" height="%d" viewbox="0 0 %d %d">',
+    'width="%f" height="%f" viewbox="0 0 %f %f">',
     self.width, self.height, self.width, self.height
   )
 
@@ -80,7 +80,7 @@ function paper:preview(filename)
          height: 100%; margin: 0; background: #ddd; }
   svg { background: white; transform: scale(2);
         box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .15); border-radius: 1px; }
-</style></head><body>\n]] .. self:render() .. "\n</body></html>"
+</style></head><body>]] .. '\n' .. self:render() .. "\n</body></html>"
 
   local output = assert(io.open(filename, 'w'))
         output:write(html)

@@ -11,7 +11,7 @@ end
 
 function pen:log()
   local penLog = string.format(
-    "pen { weight = %d, color = %s }",
+    "pen { weight = %s, color = %s }",
     self.weight, self.color
   )
 
@@ -23,7 +23,7 @@ function pen:log()
 
     for i, point in ipairs(path.points) do
       penLog = penLog .. string.format(
-        "\n    point :%s { x = %d, y = %d }",
+        "\n    point :%d { x = %s, y = %s }",
         i, point.x, point.y
       )
     end
@@ -46,7 +46,7 @@ function pen:render()
   local penTag = ""
 
   local style = string.format(
-    'style="stroke-width: %d; stroke: %s; stroke-linecap: round;' ..
+    'style="stroke-width: %s; stroke: %s; stroke-linecap: round;' ..
     'stroke-linejoin: round; fill: none;"',
     self.weight, self.color
   )
