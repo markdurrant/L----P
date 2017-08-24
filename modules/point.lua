@@ -39,6 +39,10 @@ function point:rotate(angle, origin)
   self.y = y2 + origin.y
 end
 
+function point:clone()
+  return utl.clone(self)
+end
+
 function point:getDistanceTo(point)
   local a = self.x - point.x
   local b = self.y - point.y

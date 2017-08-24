@@ -46,6 +46,10 @@ function path:move(x, y)
   end
 end
 
+function path:clone()
+  return utl.clone(self)
+end
+
 function path:render()
   local pathTag = ""
 

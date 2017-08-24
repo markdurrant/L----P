@@ -45,6 +45,10 @@ function pen:setPaper(paper)
   table.insert(paper, self)
 end
 
+function pen:clone()
+  return utl.clone(self)
+end
+
 function pen:render()
   local penTag = ""
 
