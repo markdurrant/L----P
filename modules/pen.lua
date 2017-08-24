@@ -2,11 +2,7 @@ local pen = { label = 'pen', paths = {}, weight = 2, color = '#000' }
       pen.metatable = { __index = pen }
 
 function pen:new(t)
-  if not t then
-    t =  {}
-  end
-
-  setmetatable(t, pen.metatable)
+  setmetatable(t or {}, pen.metatable)
 
   return t
 end

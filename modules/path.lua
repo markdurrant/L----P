@@ -2,11 +2,7 @@ local path = { label = "path", points = {}, closed = false }
       path.metatable = { __index = path }
 
 function path:new(t)
-  if not t then
-    t = {}
-  end
-
-  setmetatable(t, path.metatable)
+  setmetatable(t or {}, path.metatable)
 
   return t
 end
@@ -47,9 +43,7 @@ function path:render()
     pathTag = pathTag .. point.x .. " " .. point.y
   end
 
-  if self.closed == true then
-    pathTag = pathTag .. " Z"
-  end
+  if self.closed == true then pathTag = pathTag .. " Z" end
 
   pathTag = '<path d="' .. pathTag .. '"/>'
 

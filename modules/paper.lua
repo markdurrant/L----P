@@ -2,11 +2,7 @@ local paper = { label = 'paper', width = 0, height = 0, pens = {} }
       paper.metatable = { __index = paper }
 
 function paper:new(t)
-  if not t then
-    t = {}
-  end
-
-  setmetatable(t, paper.metatable)
+  setmetatable(t or {}, paper.metatable)
 
   return t
 end
