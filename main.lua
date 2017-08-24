@@ -7,42 +7,22 @@ local point = require("modules/point")
 
 local   new = require('modules/new')
 
-paper = new:paper(297, 210)
+paper = new:paper({ width = 297, height = 210 })
 
-local bluePen = new:pen(1, "#09f")
+local bluePen = new:pen({ weight = 1, color = "#09f" })
 
 local offset = 4
-
-for i = 1, 10 do
-  local rect = new:path()
-  local offset = offset * i
-
-  rect:addPoint(
-    new:point(offset, offset),
-    new:point(paper.width - offset, offset),
-    new:point(paper.width - offset, paper.height - offset),
-    new:point(offset, paper.height - offset)
-  )
-
-  rect.closed = true
-
-  bluePen:addPath(rect)
-end
 
 local myPath = new:path()
 
 myPath:addPoint(
-  new:point(offset, offset),
-  new:point(paper.width - offset, offset),
-  new:point(paper.width - offset, paper.height - offset),
-  new:point(offset, paper.height - offset)
+  new:point({ x = offset, y = offset }),
+  new:point({ x = paper.width - offset, y = offset }),
+  new:point({ x = paper.width - offset, y = paper.height - offset }),
+  new:point({ x = offset, y = paper.height - offset })
 )
 
--- myPath:print()
-
--- myPath.points[1]:print()
-
--- bluePen:print()
+bluePen:addPath(myPath)
 
 paper:addPen(bluePen)
 

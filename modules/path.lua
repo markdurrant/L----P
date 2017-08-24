@@ -1,57 +1,56 @@
-local path = {}
+local path = { label = "path", points = {}, closed = false }
+      path.metatable = { __index = path }
 
-function path:new()
-  local this = {}
-
-  this.type = "path"
-  this.closed = false
-  this.points = {}
-
-  function this:log()
-    local pathLog = string.format("PATH, closed: %s", this.closed)
-    print()
-
-    for k, point in pairs(this.points) do
-      pathLog = pathLog .. string.format("\n  [%s] ", k) .. point:log()
-    end
-
-    return pathLog
+function path:new(t)
+  if not t then
+    t = {}
   end
 
-  function this:print()
-    print(this:log())
+  setmetatable(t, path.metatable)
+
+  return t
+end
+
+function path:log()
+  local pathLog = string.format("PATH, closed: %s", self.closed)
+
+  for k, point in pairs(self.points) do
+    pathLog = pathLog .. string.format("\n  %s ", k) .. point:log()
   end
 
-  function this:addPoint(...)
-    for i, point in pairs({...}) do
-      table.insert(this.points, point)
+  return pathLog
+end
+
+function path:print()
+  print(self:log())
+end
+
+function path:addPoint(...)
+  for _, point in ipairs({ ... }) do
+    table.insert(self.points, point)
+  end
+end
+
+function path:render()
+  local pathTag = ""
+
+  for i, point in ipairs(self.points) do
+    if i == 1 then
+      pathTag = "M"
+    else
+      pathTag = " L"
     end
+
+    pathTag = pathTag .. point.x .. " " .. point.y
   end
 
-  function this:render()
-    local pathTag = ""
-    local pathContent = ""
-
-    for k, point in pairs(this.points) do
-      if k == 1 then
-        pathContent = "M"
-      else
-        pathContent = pathContent .. " L"
-      end
-
-      pathContent = pathContent .. point.x .. " " .. point.y
-    end
-
-    if this.closed == true then
-      pathContent = pathContent .. " Z"
-    end
-
-    pathTag = '<path d="' .. pathContent .. '"/>'
-
-    return pathTag
+  if self.closed == true then
+    pathTag = pathTag .. " Z"
   end
 
-  return this
+  pathTag = '<path ="' .. pathTag .. '"/>'
+
+  return pathTag
 end
 
 return path

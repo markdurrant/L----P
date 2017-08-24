@@ -1,60 +1,64 @@
-local paper = {}
+local paper = { label = 'paper', width = 0, height = 0, pens = {} }
+      paper.metatable = { __index = paper }
 
-function paper:new(width, height)
-  local this = {}
-
-  this.type = "paper"
-  this.width = width
-  this.height = height
-  this.pens = {}
-
-  function this:log()
-    local paperLog = string.format("PAPER, width: %d height: %d", this.width, this.height)
-
-    for k, pen in pairs(this.pens) do
-      paperLog = paperLog .. string.format('\n[%s] ', k) .. pen:log()
-    end
-
-    return paperLog
+function paper:new(t)
+  if not t then
+    t = {}
   end
 
-  function this:print()
-    print(this:log())
+  setmetatable(t, paper.metatable)
+
+  return t
+end
+
+function paper:log()
+  local paperLog = string.format(
+    "PAPER, width: %d height: %d",
+    self.width, self.height
+  )
+
+  for i, pen in pairs(self.pens) do
+    paperLog = paperLog .. string.format('\n%s ', i) .. pen:log()
   end
 
-  function this:addPen(...)
-    for i, pen in ipairs({...}) do
-      table.insert(this.pens, pen)
-    end
+  return paperLog
+end
+
+function paper:print()
+  print(self:log())
+end
+
+function paper:addPen(...)
+  for _, pen in ipairs( {...} ) do
+    table.insert(self.pens, pen)
+  end
+end
+
+function paper:render()
+  local paperTag = ""
+
+  local svgHead = string.format(
+    '<svg version="1.1" xmlns="http://www.w3.org/2000/svg"' ..
+    'xmlns:xlink="http://www.w3.org/1999/xlink"' ..
+    'width="%d" height="%d" viewbox="0 0 %d %d">',
+    self.width, self.height, self.width, self.height
+  )
+
+  for _, pen in ipairs(self.pens) do
+    paperTag = paperTag .. pen:render()
   end
 
-  function this:render()
-    local paperTag = ""
-    local paperContent = ""
+  paperTag = svgHead .. paperTag .. '</svg>'
 
-    local svgHead = string.format(
-      '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="%d" height="%d" viewbox="0 0 %d %d">',
-      this.width, this.height, this.width, this.height
-    )
+  return paperTag
+end
 
-    for k, pen in pairs(this.pens) do
-      paperContent = paperContent .. pen:render()
-    end
+function paper:saveTo(filename)
+  local output = assert(io.open(filename, 'w'))
+        output:write(self:render())
+        output:close()
 
-    paperTag = svgHead .. paperContent .. '</svg>'
-
-    return paperTag
-  end
-
-  function this:saveTo(filename)
-    local output = assert(io.open(filename, 'w'))
-          output:write(this:render())
-          output:close()
-
-    print(filename .. ' saved @ ' .. os.date())
-  end
-
-  return this
+  print('\n' .. filename .. ' saved @ ' .. os.date())
 end
 
 return paper
