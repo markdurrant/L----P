@@ -1,8 +1,11 @@
-local paper = { label = 'paper', width = 0, height = 0, pens = {} }
+local paper = { label = 'paper' }
       paper.metatable = { __index = paper }
 
 function paper:new(t)
   if not t then t = {} end
+  if not t.width then t.width = 0 end
+  if not t.height then t.height = 0 end
+  if not t.pens then t.pens = {} end
 
   setmetatable(t, paper.metatable)
 

@@ -2,7 +2,9 @@ local path = { label = "path" }
       path.metatable = { __index = path }
 
 function path:new(t)
-  if not t then t = { points = {}, closed = false } end
+  if not t then t = {} end
+  if not t.points then t.points = {} end
+  if not t.closed then t.closed = false end
 
   setmetatable(t, path.metatable)
 
@@ -42,6 +44,16 @@ function path:move(x, y)
   for _, point in ipairs(self.points) do
     point:move(x, y)
   end
+end
+
+function path:clone()
+  local t = {}
+
+  for _, point in ipairs(self.points) do
+    table.insert(t, point)
+  end
+
+  return path:new({ points = t, closed = self.closed })
 end
 
 function path:render()
