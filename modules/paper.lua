@@ -13,19 +13,32 @@ end
 
 function paper:log()
   local paperLog = string.format(
-    "PAPER, width: %d height: %d",
+    "paper { width = %d, height = %d }",
     self.width, self.height
   )
 
-  for i, pen in pairs(self.pens) do
-    paperLog = paperLog .. string.format('\n%s ', i) .. pen:log()
+  for i, pen in ipairs(self.pens) do
+    paperLog = paperLog .. string.format(
+      "\n  pen :%d { weight = %d, color = %s }",
+      i, pen.weight, pen.color
+    )
+
+    for i, path in ipairs(pen.paths) do
+      paperLog = paperLog .. string.format(
+        "\n    path :%d { closed = %s }",
+        i, path.closed
+      )
+
+      for i, point in ipairs(path.points) do
+        paperLog = paperLog .. string.format(
+          "\n      point :%s { x = %d, y = %d }",
+          i, point.x, point.y
+        )
+      end
+    end
   end
 
-  return paperLog
-end
-
-function paper:print()
-  print(self:log())
+  print(paperLog)
 end
 
 function paper:addPen(...)

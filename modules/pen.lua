@@ -13,19 +13,25 @@ end
 
 function pen:log()
   local penLog = string.format(
-    "PEN, weight: %d color: $s",
+    "pen { weight = %d, color = %s }",
     self.weight, self.color
   )
 
   for i, path in ipairs(self.paths) do
-    penLog = penLog .. string.format("\n%s ", i) .. path:log()
+    penLog = penLog .. string.format(
+      "\n  path :%d { closed = %s }",
+      i, path.closed
+    )
+
+    for i, point in ipairs(path.points) do
+      penLog = penLog .. string.format(
+        "\n    point :%s { x = %d, y = %d }",
+        i, point.x, point.y
+      )
+    end
   end
 
-  return penLog
-end
-
-function pen:print()
-  print(self:log())
+  print(penLog)
 end
 
 function pen:addPath(...)

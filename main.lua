@@ -9,7 +9,7 @@ local   new = require('modules/new')
 
 paper = new:paper({ width = 297, height = 210 })
 
-local bluePen = new:pen({ weight = 1, color = "#09f" })
+local bluePen = new:pen({ weight = 2, color = "#09f" })
 
 local offset = 4
 
@@ -26,6 +26,6 @@ bluePen:addPath(myPath)
 
 paper:addPen(bluePen)
 
-paper:print()
+paper:log()
 
 paper:saveTo('svg-output/testy.svg')

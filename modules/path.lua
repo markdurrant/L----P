@@ -12,17 +12,16 @@ function path:new(t)
 end
 
 function path:log()
-  local pathLog = string.format("PATH, closed: %s", self.closed)
+  local pathLog = string.format("path { closed = %s }", self.closed)
 
-  for k, point in pairs(self.points) do
-    pathLog = pathLog .. string.format("\n  %s ", k) .. point:log()
+  for i, point in ipairs(self.points) do
+    pathLog = pathLog .. string.format(
+      "\n  point :%s { x = %d, y = %d }",
+      i, point.x, point.y
+    )
   end
 
-  return pathLog
-end
-
-function path:print()
-  print(self:log())
+  print(pathLog)
 end
 
 function path:addPoint(...)

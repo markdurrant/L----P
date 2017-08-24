@@ -12,13 +12,7 @@ function point:new(t)
 end
 
 function point:log()
-  local pointLog = string.format("POINT, x: %d y: %d", self.x, self.y)
-
-  return pointLog
-end
-
-function point:print()
-  print(self:log())
+  print(string.format("point { x = %d, y = %d }", self.x, self.y))
 end
 
 function point:getDistance(point)
