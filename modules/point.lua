@@ -39,10 +39,6 @@ function point:rotate(angle, origin)
   self.y = y2 + origin.y
 end
 
-function point:clone()
-  return point:new({ x = self.x, y = self.y })
-end
-
 function point:getDistanceTo(point)
   local a = self.x - point.x
   local b = self.y - point.y

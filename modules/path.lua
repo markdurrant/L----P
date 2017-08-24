@@ -46,16 +46,6 @@ function path:move(x, y)
   end
 end
 
-function path:clone()
-  local t = {}
-
-  for _, point in ipairs(self.points) do
-    table.insert(t, point)
-  end
-
-  return path:new({ points = t, closed = self.closed })
-end
-
 function path:render()
   local pathTag = ""
 
