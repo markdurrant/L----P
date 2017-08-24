@@ -18,7 +18,7 @@ myPath:addPoint(
   point:new({ x = offset, y = paper.height - offset })
 )
 
-bluePen:addPath(myPath)
+myPath:setPen(bluePen)
 
 paper:addPen(bluePen)
 

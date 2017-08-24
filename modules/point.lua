@@ -15,6 +15,10 @@ function point:log()
   print(string.format("point { x = %d, y = %d }", self.x, self.y))
 end
 
+function point:setPath(path)
+  table.insert(path, self)
+end
+
 function point:getDistance(point)
   local a = self.x - point.x
   local b = self.y - point.y

@@ -30,6 +30,10 @@ function path:addPoint(...)
   end
 end
 
+function path:setPen(pen)
+  table.insert(pen.paths, self)
+end
+
 function path:render()
   local pathTag = ""
 

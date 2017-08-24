@@ -40,6 +40,10 @@ function pen:addPath(...)
   end
 end
 
+function pen:setPaper(paper)
+  table.insert(paper, self)
+end
+
 function pen:render()
   local penTag = ""
 
