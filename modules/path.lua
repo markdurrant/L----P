@@ -2,7 +2,9 @@ local path = { label = "path", points = {}, closed = false }
       path.metatable = { __index = path }
 
 function path:new(t)
-  setmetatable(t or {}, path.metatable)
+  if not t then t = {} end
+
+  setmetatable(t, path.metatable)
 
   return t
 end

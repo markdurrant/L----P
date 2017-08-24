@@ -2,7 +2,10 @@ local point = { label = "point", x = 0, y = 0 }
       point.metatable = { __index = point }
 
 function point:new(t)
-  setmetatable(t or {}, point.metatable)
+  if not t then t = {} end
+
+  setmetatable(t, point.metatable)
+
   return t
 end
 

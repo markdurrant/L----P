@@ -51,8 +51,6 @@ print("p15 " .. p0:getAngleTo(p15))
 print("p16 " .. p0:getAngleTo(p16))
 
 
-myPoint = point:new()
-
 
 paper:saveTo('svg-output/testy.svg')
 paper:preview('html-preview/preview.html')
