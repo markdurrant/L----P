@@ -1,25 +1,21 @@
-local   log = require("modules/logTable")
-
 local paper = require("modules/paper")
 local   pen = require("modules/pen")
 local  path = require("modules/path")
 local point = require("modules/point")
 
-local   new = require('modules/new')
+paper = paper:new({ width = 297, height = 210 })
 
-paper = new:paper({ width = 297, height = 210 })
-
-local bluePen = new:pen({ weight = 2, color = "#09f" })
+local bluePen = pen:new({ weight = 2, color = "#09f" })
 
 local offset = 4
 
-local myPath = new:path()
+local myPath = path:new()
 
 myPath:addPoint(
-  new:point({ x = offset, y = offset }),
-  new:point({ x = paper.width - offset, y = offset }),
-  new:point({ x = paper.width - offset, y = paper.height - offset }),
-  new:point({ x = offset, y = paper.height - offset })
+  point:new({ x = offset, y = offset }),
+  point:new({ x = paper.width - offset, y = offset }),
+  point:new({ x = paper.width - offset, y = paper.height - offset }),
+  point:new({ x = offset, y = paper.height - offset })
 )
 
 bluePen:addPath(myPath)

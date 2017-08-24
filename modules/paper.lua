@@ -71,7 +71,7 @@ function paper:saveTo(filename)
         output:write(self:render())
         output:close()
 
-  print('\n' .. filename .. ' saved @ ' .. os.date())
+  print('\n' .. '[ ' .. filename .. ' saved @ ' .. os.date() .. ' ]')
 end
 
 return paper
