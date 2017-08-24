@@ -26,3 +26,4 @@ paper:addPen(bluePen)
 print(paper:render())
 
 paper:saveTo('svg-output/testy.svg')
+paper:preview('html-preview/preview.html')

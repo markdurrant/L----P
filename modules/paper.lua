@@ -74,4 +74,21 @@ function paper:saveTo(filename)
   print('\n' .. '[ ' .. filename .. ' saved @ ' .. os.date() .. ' ]')
 end
 
+function paper:preview(filename)
+  local html = [[<!doctype html><html><head><title>SVG preview</title>
+<style type="text/css">
+  html { height: 100%; }
+  body { display: flex; justify-content: center; align-items: center;
+         height: 100%; margin: 0; background: #ddd; }
+  svg { background: white; transform: scale(2);
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .15); border-radius: 1px; }
+</style></head><body>\n]] .. self:render() .. "\n</body></html>"
+
+  local output = assert(io.open(filename, 'w'))
+        output:write(html)
+        output:close()
+
+  print('\n' .. '[ ' .. filename .. ' saved @ ' .. os.date() .. ' ]')
+end
+
 return paper
