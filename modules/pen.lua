@@ -57,7 +57,7 @@ function pen:render()
     penTag = penTag .. path:render()
   end
 
-  penTag = '<g ' .. style .. penTag .. '</g>'
+  penTag = '<g ' .. style .. '>' .. penTag .. '</g>'
 
   return penTag
 end

@@ -18,10 +18,11 @@ myPath:addPoint(
   point:new({ x = offset, y = paper.height - offset })
 )
 
+myPath.closed = true
 myPath:setPen(bluePen)
 
 paper:addPen(bluePen)
 
-paper:log()
+print(paper:render())
 
 paper:saveTo('svg-output/testy.svg')

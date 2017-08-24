@@ -39,9 +39,9 @@ function path:render()
 
   for i, point in ipairs(self.points) do
     if i == 1 then
-      pathTag = "M"
+      pathTag = "M "
     else
-      pathTag = " L"
+      pathTag = pathTag .. " L"
     end
 
     pathTag = pathTag .. point.x .. " " .. point.y
@@ -51,7 +51,7 @@ function path:render()
     pathTag = pathTag .. " Z"
   end
 
-  pathTag = '<path ="' .. pathTag .. '"/>'
+  pathTag = '<path d="' .. pathTag .. '"/>'
 
   return pathTag
 end
