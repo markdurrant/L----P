@@ -32,6 +32,18 @@ function path:setPen(pen)
   table.insert(pen.paths, self)
 end
 
+function path:rotate(angle, origin)
+  for _, point in ipairs(self.points) do
+    point:rotate(angle, origin)
+  end
+end
+
+function path:move(x, y)
+  for _, point in ipairs(self.points) do
+    point:move(x, y)
+  end
+end
+
 function path:render()
   local pathTag = ""
 

@@ -17,18 +17,11 @@ function point:setPath(path)
   table.insert(path, self)
 end
 
-function point:add(x, y)
+function point:move(x, y)
   if not y then y = x end
 
   self.x = self.x + x
   self.y = self.y + y
-end
-
-function point:subtract(x, y)
-  if not y then y = x end
-
-  self.x = self.x - x
-  self.y = self.y - y
 end
 
 function point:getDistanceTo(point)
