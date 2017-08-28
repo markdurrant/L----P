@@ -70,8 +70,8 @@ function paper:render()
   local paperTag = ""
 
   local svgHead = string.format(
-    '<svg version="1.1" xmlns="http://www.w3.org/2000/svg"' ..
-    'xmlns:xlink="http://www.w3.org/1999/xlink"' ..
+    '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" ' ..
+    'xmlns:xlink="http://www.w3.org/1999/xlink" ' ..
     'width="%f" height="%f" viewbox="0 0 %f %f">',
     self.width, self.height, self.width, self.height
   )

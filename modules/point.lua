@@ -1,3 +1,5 @@
+local utl = require("modules/utl")
+
 local point = { label = "point" }
       point.metatable = { __index = point }
 

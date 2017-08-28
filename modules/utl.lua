@@ -37,6 +37,8 @@ function utl.random(a, b)
     random = math.random() 
   end
 
+  random = tonumber(string.format('%.3f', random))
+
   return random
 end
 
