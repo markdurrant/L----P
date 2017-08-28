@@ -1,3 +1,5 @@
+local point = require("modules/point")
+
 local paper = { label = 'paper' }
       paper.metatable = { __index = paper }
 
@@ -8,6 +10,8 @@ function paper:new(t)
   if not t.pens then t.pens = {} end
 
   setmetatable(t, paper.metatable)
+
+  self:setBBox(t.width, t.height)
 
   return t
 end
@@ -40,6 +44,20 @@ function paper:log()
   end
 
   print(paperLog)
+end
+
+function paper:setBBox(width, height)
+       self.topLeft = point:new({ x = 0, y = height })
+     self.topCenter = point:new({ x = width / 2, y = height })
+      self.topRight = point:new({ x = width, y = height })
+
+    self.middleLeft = point:new({ x = 0, y = height / 2 })
+        self.center = point:new({ x = width / 2, y = height / 2 })
+   self.middleRight = point:new({ x = width, y = height / 2 })
+
+    self.bottomLeft = point:new({ x = 0, y = 0 })
+  self.bottomCenter = point:new({ x = width / 2, y = 0 })
+   self.bottomRight = point:new({ x = width, y = 0 })
 end
 
 function paper:addPen(...)
