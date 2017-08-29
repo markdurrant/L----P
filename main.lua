@@ -1,12 +1,12 @@
 local utl = require("modules/utl")
 
-local paper = require("modules/paper")
-local   pen = require("modules/pen")
-local  path = require("modules/path")
+local Paper = require("modules/paper")
+local   Pen = require("modules/pen")
+local  Path = require("modules/path")
 local point = require("modules/point")
 
-local paper = paper:new({ width = 300, height = 300 })
-local pen = pen:new({ weight = 2, color = "#000" })
+local paper = Paper:new({ width = 300, height = 300 })
+local pen = Pen:new({ weight = 2, color = "#000" })
       paper:addPen(pen)
 
 
@@ -66,7 +66,7 @@ function sample(angles)
   return bestCandidate
 end
 
-for r = 1, 12 do
+for r = 1, 8 do
   local angles = {}
 
   for i = 1, 10 + r * r * 4 do
@@ -77,7 +77,7 @@ for r = 1, 12 do
     local p1 = point:newOAD(paper.center, angle, 10 + r * 8)
     local p2 = point:newOAD(paper.center, angle, 14 + r * 8)
 
-    local l = path:new({ points = { p1, p2 }})
+    local l = Path:new({ points = { p1, p2 }})
           l:setPen(pen)
   end
 end

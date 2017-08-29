@@ -4,7 +4,7 @@
 
 ---
 
-* Capitalize constructors, Paper, Pen, Path, Point
+* ~~Capitalize constructors, Paper, Pen, Path, Point~~
 
 * Move out best candidate into utl
 * Find a place for point:newOAD(origin, angle, distance)

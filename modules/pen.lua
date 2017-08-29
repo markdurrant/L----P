@@ -1,18 +1,18 @@
-local pen = { label = 'pen'}
-      pen.metatable = { __index = pen }
+local Pen = { label = 'pen'}
+      Pen.metatable = { __index = Pen }
 
-function pen:new(t)
+function Pen:new(t)
   if not t then t = {} end
   if not t.paths then t.paths = {} end
   if not t.weight then t.weight = 2 end
   if not t.color then t.color = '#000' end
 
-  setmetatable(t, pen.metatable)
+  setmetatable(t, Pen.metatable)
 
   return t
 end
 
-function pen:log()
+function Pen:log()
   local penLog = string.format(
     "pen { weight = %s, color = %s }",
     self.weight, self.color
@@ -35,21 +35,21 @@ function pen:log()
   print(penLog)
 end
 
-function pen:addPath(...)
+function Pen:addPath(...)
   for _, path in ipairs({ ... }) do
     table.insert(self.paths, path)
   end
 end
 
-function pen:setPaper(paper)
+function Pen:setPaper(paper)
   table.insert(paper, self)
 end
 
-function pen:clone()
+function Pen:clone()
   return utl.clone(self)
 end
 
-function pen:render()
+function Pen:render()
   local penTag = ""
 
   local style = string.format(
@@ -67,4 +67,4 @@ function pen:render()
   return penTag
 end
 
-return pen
+return Pen

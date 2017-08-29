@@ -1,34 +1,34 @@
 local utl = require("modules/utl")
 
-local point = { label = "point" }
-      point.metatable = { __index = point }
+local Point = { label = "point" }
+      Point.metatable = { __index = Point }
 
-function point:new(t)
+function Point:new(t)
   if not t then t = {} end
   if not t.x then t.x = 0 end
   if not t.y then t.y = 0 end
 
-  setmetatable(t, point.metatable)
+  setmetatable(t, Point.metatable)
 
   return t
 end
 
-function point:log()
+function Point:log()
   print(string.format("point { x = %s, y = %s }", self.x, self.y))
 end
 
-function point:setPath(path)
+function Point:setPath(path)
   table.insert(path, self)
 end
 
-function point:move(x, y)
+function Point:move(x, y)
   if not y then y = x end
 
   self.x = self.x + x
   self.y = self.y + y
 end
 
-function point:rotate(angle, origin)
+function Point:rotate(angle, origin)
   local radians = math.rad(angle)
 
   local x1 = self.x - origin.x
@@ -41,11 +41,11 @@ function point:rotate(angle, origin)
   self.y = y2 + origin.y
 end
 
-function point:clone()
+function Point:clone()
   return utl.clone(self)
 end
 
-function point:getDistanceTo(point)
+function Point:getDistanceTo(point)
   local a = self.x - point.x
   local b = self.y - point.y
 
@@ -64,7 +64,7 @@ function point:getDistanceTo(point)
   return distance
 end
 
-function point:getAngleTo(point)
+function Point:getAngleTo(point)
   local a = self.x - point.x
   local b = self.y - point.y
 
@@ -79,4 +79,4 @@ function point:getAngleTo(point)
   return angle
 end
 
-return point
+return Point

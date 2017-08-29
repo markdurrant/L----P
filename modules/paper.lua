@@ -1,22 +1,22 @@
-local point = require("modules/point")
+local Point = require("modules/point")
 
-local paper = { label = 'paper' }
-      paper.metatable = { __index = paper }
+local Paper = { label = 'paper' }
+      Paper.metatable = { __index = Paper }
 
-function paper:new(t)
+function Paper:new(t)
   if not t then t = {} end
   if not t.width then t.width = 0 end
   if not t.height then t.height = 0 end
   if not t.pens then t.pens = {} end
 
-  setmetatable(t, paper.metatable)
+  setmetatable(t, Paper.metatable)
 
   self:setBBox(t.width, t.height)
 
   return t
 end
 
-function paper:log()
+function Paper:log()
   local paperLog = string.format(
     "paper { width = %s, height = %f }",
     self.width, self.height
@@ -46,27 +46,27 @@ function paper:log()
   print(paperLog)
 end
 
-function paper:setBBox(width, height)
-       self.topLeft = point:new({ x = 0, y = height })
-     self.topCenter = point:new({ x = width / 2, y = height })
-      self.topRight = point:new({ x = width, y = height })
+function Paper:setBBox(width, height)
+       self.topLeft = Point:new({ x = 0, y = height })
+     self.topCenter = Point:new({ x = width / 2, y = height })
+      self.topRight = Point:new({ x = width, y = height })
 
-    self.middleLeft = point:new({ x = 0, y = height / 2 })
-        self.center = point:new({ x = width / 2, y = height / 2 })
-   self.middleRight = point:new({ x = width, y = height / 2 })
+    self.middleLeft = Point:new({ x = 0, y = height / 2 })
+        self.center = Point:new({ x = width / 2, y = height / 2 })
+   self.middleRight = Point:new({ x = width, y = height / 2 })
 
-    self.bottomLeft = point:new({ x = 0, y = 0 })
-  self.bottomCenter = point:new({ x = width / 2, y = 0 })
-   self.bottomRight = point:new({ x = width, y = 0 })
+    self.bottomLeft = Point:new({ x = 0, y = 0 })
+  self.bottomCenter = Point:new({ x = width / 2, y = 0 })
+   self.bottomRight = Point:new({ x = width, y = 0 })
 end
 
-function paper:addPen(...)
+function Paper:addPen(...)
   for _, pen in ipairs( {...} ) do
     table.insert(self.pens, pen)
   end
 end
 
-function paper:render()
+function Paper:render()
   local paperTag = ""
 
   local svgHead = string.format(
@@ -85,7 +85,7 @@ function paper:render()
   return paperTag
 end
 
-function paper:saveTo(filename)
+function Paper:saveTo(filename)
   local output = assert(io.open(filename, 'w'))
         output:write(self:render())
         output:close()
@@ -93,7 +93,7 @@ function paper:saveTo(filename)
   print('\n' .. '[ ' .. filename .. ' saved @ ' .. os.date() .. ' ]')
 end
 
-function paper:preview(filename)
+function Paper:preview(filename)
   local html = [[<!doctype html><html><head><title>SVG preview</title>
 <style type="text/css">
   html { height: 100%; }
@@ -110,4 +110,4 @@ function paper:preview(filename)
   print('\n' .. '[ ' .. filename .. ' saved @ ' .. os.date() .. ' ]')
 end
 
-return paper
+return Paper

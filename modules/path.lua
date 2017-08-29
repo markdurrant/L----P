@@ -1,19 +1,19 @@
 local utl = require("modules/utl")
 
-local path = { label = "path" }
-      path.metatable = { __index = path }
+local Path = { label = "path" }
+      Path.metatable = { __index = Path }
 
-function path:new(t)
+function Path:new(t)
   if not t then t = {} end
   if not t.points then t.points = {} end
   if not t.closed then t.closed = false end
 
-  setmetatable(t, path.metatable)
+  setmetatable(t, Path.metatable)
 
   return t
 end
 
-function path:log()
+function Path:log()
   local pathLog = string.format("path { closed = %s }", self.closed)
 
   for i, point in ipairs(self.points) do
@@ -26,33 +26,33 @@ function path:log()
   print(pathLog)
 end
 
-function path:addPoint(...)
+function Path:addPoint(...)
   for _, point in ipairs({ ... }) do
     table.insert(self.points, point)
   end
 end
 
-function path:setPen(pen)
+function Path:setPen(pen)
   table.insert(pen.paths, self)
 end
 
-function path:rotate(angle, origin)
+function Path:rotate(angle, origin)
   for _, point in ipairs(self.points) do
     point:rotate(angle, origin)
   end
 end
 
-function path:move(x, y)
+function Path:move(x, y)
   for _, point in ipairs(self.points) do
     point:move(x, y)
   end
 end
 
-function path:clone()
+function Path:clone()
   return utl.clone(self)
 end
 
-function path:render()
+function Path:render()
   local pathTag = ""
 
   for i, point in ipairs(self.points) do
@@ -72,4 +72,4 @@ function path:render()
   return pathTag
 end
 
-return path
+return Path
