@@ -1,5 +1,5 @@
 * Write start up instructions
-* Comment functions (point, path, paper, pen, utl, shape)
+* Comment functions (~~point~~, path, paper, pen, utl, shape)
 * Documentation
 
 ---
@@ -34,6 +34,6 @@
 * Scale paths
 * Flip paths
 
-* Get length of path
+* ~~Get length of path~~
 * Get point from distance along a path
 * Get path intersections
