@@ -10,8 +10,11 @@
 * Find a place for point:newOAD(origin, angle, distance)
 * Find place for shape functions
 
+* Add groups
+
 * Create shape functions
   * ~~line~~
+  * cross
   * rectangles
   * regular polygon
   * regular polygon (squashed/ellipse)
