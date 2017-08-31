@@ -11,7 +11,7 @@
 * Find place for shape functions
 
 * Create shape functions
-  * line
+  * ~~line~~
   * rectangles
   * regular polygon
   * regular polygon (squashed/ellipse)
