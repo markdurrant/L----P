@@ -1,5 +1,5 @@
 * Write start up instructions
-* Comment functions
+* Comment functions (point, path, paper, pen, utl, shape)
 * Documentation
 
 ---
@@ -30,7 +30,7 @@
 * Set bounding box of paths
 * How to trigger bounding box reset
 
-* Rotate paths
+* ~~Rotate paths~~
 * Scale paths
 * Flip paths
 

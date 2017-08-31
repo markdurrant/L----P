@@ -52,6 +52,22 @@ function Path:clone()
   return utl.clone(self)
 end
 
+function Path:getLength()
+  local length = 0
+
+  for i, point in ipairs(self.points) do  
+    if i ~= #self.points then
+      length = length + self.points[i]:getDistanceTo(self.points[i + 1])
+    end
+  end
+
+  if self.closed == true then
+    length = length + self.points[#self.points]:getDistanceTo(self.points[1])
+  end
+
+  return length
+end
+
 function Path:render()
   local pathTag = ""
 
