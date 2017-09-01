@@ -5,7 +5,7 @@ local utl = require("modules/utl")
 local Point = { label = "Point" }
       Point.metatable = { __index = Point }
 
--- create a new point with X & Y
+-- create a new Point with X & Y
 function Point:new(x, y)
   local point = {}
         point.x = x or 0
@@ -16,17 +16,17 @@ function Point:new(x, y)
   return point
 end
 
--- create a copy of the point
+-- create a copy of the Point
 function Point:clone()
   return utl.clone(self)
 end
 
--- add the point to a path
+-- add the Point to a path
 function Point:setPath(path)
   table.insert(path, self)
 end
 
--- move the point in X & Y
+-- move the Point in X & Y
 function Point:move(x, y)
   if not y then y = x end
 
@@ -34,17 +34,17 @@ function Point:move(x, y)
   self.y = self.y + y
 end
 
--- move the point in X
+-- move the Point in X
 function Point:moveX(x)
   self.x = self.x + x
 end
 
--- move the point in Y
+-- move the Point in Y
 function Point:moveY(y)
   self.y = self.y + y
 end
 
--- move the point along a vector (angle & distance)
+-- move the Point along a vector (angle & distance)
 -- North = 0, East = 90, South = 180, West = 270
 function Point:moveVector(angle, distance)
   angle = math.rad(angle - 90)
@@ -53,7 +53,7 @@ function Point:moveVector(angle, distance)
   self.y = self.y + math.sin(angle) * distance
 end
 
--- rotate the point around an origin (point) in degrees
+-- rotate the Point around an origin (point) in degrees
 function Point:rotate(point, angle)
   local radians = math.rad(angle)
 
@@ -104,7 +104,7 @@ function Point:getAngleTo(point)
   return angle
 end
 
--- print point details
+-- print Point details
 function Point:log()
   print(string.format("point { x = %s, y = %s }", self.x, self.y))
 end

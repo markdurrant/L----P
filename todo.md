@@ -1,5 +1,5 @@
 * Write start up instructions
-* Comment functions (~~point~~, path, paper, pen, utl, shape)
+* Comment functions (~~point~~, ~~path~~, paper, pen, utl, shape)
 * Documentation
 
 ---

@@ -1,57 +1,71 @@
+-- get utilities 
 local utl = require("modules/utl")
 
+-- set up Path table and label
 local Path = { label = "path" }
       Path.metatable = { __index = Path }
 
-function Path:new(t)
-  if not t then t = {} end
-  if not t.points then t.points = {} end
-  if not t.closed then t.closed = false end
+-- create new Path with points table
+function Path:new(...)
+  local path = {}
+        path.points = {}
+        path.closed = true
 
-  setmetatable(t, Path.metatable)
-
-  return t
-end
-
-function Path:log()
-  local pathLog = string.format("path { closed = %s }", self.closed)
-
-  for i, point in ipairs(self.points) do
-    pathLog = pathLog .. string.format(
-      "\n  point :%s { x = %s, y = %s }",
-      i, point.x, point.y
-    )
+  if {...} then
+    path.points = {...}
   end
 
-  print(pathLog)
+  setmetatable(path, Path.metatable)
+
+  return path
 end
 
-function Path:addPoint(...)
+-- add add points to the Path
+function Path:addPoints(...)
   for _, point in ipairs({ ... }) do
     table.insert(self.points, point)
   end
 end
 
+-- set the pen for the Path
 function Path:setPen(pen)
   table.insert(pen.paths, self)
 end
 
-function Path:rotate(angle, origin)
+-- rotate the path around an origin
+function Path:rotate(angle, point)
   for _, point in ipairs(self.points) do
-    point:rotate(angle, origin)
+    point:rotate(angle, point)
   end
 end
 
+-- move the Path in X & Y
 function Path:move(x, y)
   for _, point in ipairs(self.points) do
     point:move(x, y)
   end
 end
 
+-- move the Path in X
+function Path:moveX(x)
+  for _, point in ipairs(self.points) do
+    point:moveX(x)
+  end
+end
+
+-- move the Path in Y
+function Path:moveY(y)
+  for _, point in ipairs(self.points) do
+    point:moveY(y)
+  end
+end
+
+-- create a copy of the Path
 function Path:clone()
   return utl.clone(self)
 end
 
+-- get the total length of the path
 function Path:getLength()
   local length = 0
 
@@ -68,6 +82,7 @@ function Path:getLength()
   return length
 end
 
+-- render the Path
 function Path:render()
   local pathTag = ""
 
@@ -88,4 +103,19 @@ function Path:render()
   return pathTag
 end
 
+-- print Path details
+function Path:log()
+  local pathLog = string.format("path { closed = %s }", self.closed)
+
+  for i, point in ipairs(self.points) do
+    pathLog = pathLog .. string.format(
+      "\n  point :%s { x = %s, y = %s }",
+      i, point.x, point.y
+    )
+  end
+
+  print(pathLog)
+end
+
+-- return the Path module
 return Path
