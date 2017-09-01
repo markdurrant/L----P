@@ -1,5 +1,6 @@
--- get utilities 
+-- get utilities & Point
 local utl = require("modules/utl")
+local Point = require("modules/point")
 
 -- set up Path table and label
 local Path = { label = "path" }
@@ -17,7 +18,39 @@ function Path:new(...)
 
   setmetatable(path, Path.metatable)
 
+  path:setBbox()
+
   return path
+end
+
+-- set bounding box for Path
+function Path:setBbox()
+  local top = self.points[1].y
+  local bottom = self.points[1].y
+  local left = self.points[1].x 
+  local right = self.points[1].x
+
+  for i, point in ipairs(self.points) do
+    if point.y > top then top = point.y end
+    if point.y < bottom then bottom = point.y end
+    if point.x > right then right = point.x end
+    if point.x < left then left = point.x end
+  end
+
+  self.top = top
+  self.bottom = bottom
+  self.left = left
+  self.right = right
+
+  self.topLeft = Point:new(left, top)
+  self.topCenter = Point:new(left + (right - left) / 2, top)
+  self.topRight = Point:new(right, top)  
+  self.middleLeft = Point:new(left, bottom + (top - bottom) / 2)
+  self.center = Point:new(left + (right - left) / 2, bottom + (top - bottom) / 2)
+  self.middleRight = Point:new(right, bottom + (top - bottom) / 2) 
+  self.bottomLeft = Point:new(left, bottom)
+  self.bottomCenter = Point:new(left + (right - left) / 2, bottom)
+  self.bottomRight = Point:new(right, bottom)
 end
 
 -- add points to the Path 
@@ -36,6 +69,8 @@ function Path:addPoints(...)
   for i, point in ipairs(t) do
     table.insert(self.points, index + i, point)
   end
+
+  self:setBbox()
 end
 
 -- remove points from the Path at a specified position
@@ -49,6 +84,8 @@ function Path:removePoints(index, number)
       table.remove(self.points)
     end
   end
+
+  self:setBbox()
 end
 
 -- set the pen for the Path
@@ -61,6 +98,8 @@ function Path:rotate(angle, point)
   for _, point in ipairs(self.points) do
     point:rotate(angle, point)
   end
+
+  self:setBbox()
 end
 
 -- move the Path in X & Y
@@ -68,6 +107,8 @@ function Path:move(x, y)
   for _, point in ipairs(self.points) do
     point:move(x, y)
   end
+
+  self:setBbox()
 end
 
 -- move the Path in X
@@ -75,6 +116,8 @@ function Path:moveX(x)
   for _, point in ipairs(self.points) do
     point:moveX(x)
   end
+
+  self:setBbox()
 end
 
 -- move the Path in Y
@@ -82,6 +125,8 @@ function Path:moveY(y)
   for _, point in ipairs(self.points) do
     point:moveY(y)
   end
+
+  self:setBbox()
 end
 
 -- create a copy of the Path

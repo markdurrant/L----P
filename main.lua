@@ -8,17 +8,8 @@ local Point = require("modules/point")
 local Shape = require("modules/shape")
 
 local p = Path:new(
-  Point:new(10, 0),
-  Point:new(20, 0),
-  Point:new(30, 0)
+  Point:new(100, 100),
+  Point:new(200, 100),
+  Point:new(200, 200),
+  Point:new(100, 200)
 )
-
-p:addPoints(
-  Point:new(40, 0),
-  Point:new(50, 0),
-  Point:new(60, 0)
-)
-
-p:removePoints(2, 3)
-
-p:log()

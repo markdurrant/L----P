@@ -47,17 +47,20 @@ function Paper:log()
 end
 
 function Paper:setBBox(width, height)
-       self.topLeft = Point:new({ x = 0, y = height })
-     self.topCenter = Point:new({ x = width / 2, y = height })
-      self.topRight = Point:new({ x = width, y = height })
+  self.top = height
+  self.bottom = 0
+  self.left = 0
+  self.right = width
 
-    self.middleLeft = Point:new({ x = 0, y = height / 2 })
-        self.center = Point:new({ x = width / 2, y = height / 2 })
-   self.middleRight = Point:new({ x = width, y = height / 2 })
-
-    self.bottomLeft = Point:new({ x = 0, y = 0 })
-  self.bottomCenter = Point:new({ x = width / 2, y = 0 })
-   self.bottomRight = Point:new({ x = width, y = 0 })
+  self.topLeft = Point:new(0, height)
+  self.topCenter = Point:new(width / 2, height)
+  self.topRight = Point:new(width, height)  
+  self.middleLeft = Point:new(0, height / 2)
+  self.center = Point:new(width / 2, height / 2)
+  self.middleRight = Point:new(width, height / 2) 
+  self.bottomLeft = Point:new(0, 0)
+  self.bottomCenter = Point:new(width / 2, 0)
+  self.bottomRight = Point:new(width, 0)
 end
 
 function Paper:addPen(...)
