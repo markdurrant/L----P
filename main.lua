@@ -15,4 +15,8 @@ p = Shape.RegPolygon(paper.center, 150, 4)
 p:setPen(black)
 p:log()
 
+r = Shape.Rectangle(paper.center, 380, 40)
+r:setPen(black)
+r:log()
+
 paper:saveTo('svg-output/testy.svg')

@@ -15,8 +15,8 @@
 * Create shape functions
   * ~~line~~
   * cross
-  * rectangles
-  * regular polygon
+  * ~~rectangles~~
+  * ~~regular polygon~~
   * regular polygon (squashed/ellipse)
   * 'arc' (regular polygon type arc)
 
