@@ -30,10 +30,11 @@
 * ~~Insert points at a location to paths~~
 * create random point
 
-* Set bounding box of paths
-* How to trigger bounding box reset
+* ~~Set bounding box of paths~~
+* ~~How to trigger bounding box reset~~
 
 * ~~Rotate paths~~
+* Rotate path around it's self
 * Scale paths
 * Flip paths
 
