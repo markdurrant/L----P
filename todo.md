@@ -26,8 +26,8 @@
 * Improve random
 * Improve generators
 
-* Remove points from path
-* Insert points at a location to paths
+* ~~Remove points from path~~
+* ~~Insert points at a location to paths~~
 * create random point
 
 * Set bounding box of paths

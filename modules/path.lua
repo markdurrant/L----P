@@ -20,10 +20,34 @@ function Path:new(...)
   return path
 end
 
--- add add points to the Path
+-- add points to the Path 
+-- give an optional index to add points to the middle of a path
 function Path:addPoints(...)
-  for _, point in ipairs({ ... }) do
-    table.insert(self.points, point)
+  local t = { ... }
+  local index = 0
+
+  if type(t[#t]) == "number" then
+    index = t[#t]
+    table.remove(t, #t)
+  else 
+    index = #t
+  end
+
+  for i, point in ipairs(t) do
+    table.insert(self.points, index + i, point)
+  end
+end
+
+-- remove points from the Path at a specified position
+function Path:removePoints(index, number)
+  if index then
+    for i = 1, number do
+      table.remove(self.points, index)
+    end
+  else
+    for i = 1, number do
+      table.remove(self.points)
+    end
   end
 end
 
