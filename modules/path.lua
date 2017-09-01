@@ -10,7 +10,7 @@ local Path = { label = "path" }
 function Path:new(...)
   local path = {}
         path.points = {}
-        path.closed = true
+        path.closed = false
 
   if {...} then
     path.points = {...}
@@ -18,17 +18,19 @@ function Path:new(...)
 
   setmetatable(path, Path.metatable)
 
-  path:setBbox()
+  if path.points[1] then
+    path:setBbox()
+  end
 
   return path
 end
 
 -- set bounding box for Path
 function Path:setBbox()
-  local top = self.points[1].y
+  local top    = self.points[1].y
   local bottom = self.points[1].y
-  local left = self.points[1].x 
-  local right = self.points[1].x
+  local left   = self.points[1].x 
+  local right  = self.points[1].x
 
   for i, point in ipairs(self.points) do
     if point.y > top then top = point.y end
@@ -37,20 +39,20 @@ function Path:setBbox()
     if point.x < left then left = point.x end
   end
 
-  self.top = top
+  self.top    = top
   self.bottom = bottom
-  self.left = left
-  self.right = right
+  self.left   = left
+  self.right  = right
 
-  self.topLeft = Point:new(left, top)
-  self.topCenter = Point:new(left + (right - left) / 2, top)
-  self.topRight = Point:new(right, top)  
-  self.middleLeft = Point:new(left, bottom + (top - bottom) / 2)
-  self.center = Point:new(left + (right - left) / 2, bottom + (top - bottom) / 2)
-  self.middleRight = Point:new(right, bottom + (top - bottom) / 2) 
-  self.bottomLeft = Point:new(left, bottom)
+  self.topLeft      = Point:new(left, top)
+  self.topCenter    = Point:new(left + (right - left) / 2, top)
+  self.topRight     = Point:new(right, top)  
+  self.middleLeft   = Point:new(left, bottom + (top - bottom) / 2)
+  self.center       = Point:new(left + (right - left) / 2, bottom + (top - bottom) / 2)
+  self.middleRight  = Point:new(right, bottom + (top - bottom) / 2) 
+  self.bottomLeft   = Point:new(left, bottom)
   self.bottomCenter = Point:new(left + (right - left) / 2, bottom)
-  self.bottomRight = Point:new(right, bottom)
+  self.bottomRight  = Point:new(right, bottom)
 end
 
 -- add points to the Path 
@@ -62,7 +64,9 @@ function Path:addPoints(...)
   if type(t[#t]) == "number" then
     index = t[#t]
     table.remove(t, #t)
-  else 
+  elseif #t == 1 then
+    index = 0
+  else
     index = #t
   end
 

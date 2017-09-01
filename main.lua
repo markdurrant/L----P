@@ -7,9 +7,12 @@ local Point = require("modules/point")
 
 local Shape = require("modules/shape")
 
-local p = Path:new(
-  Point:new(100, 100),
-  Point:new(200, 100),
-  Point:new(200, 200),
-  Point:new(100, 200)
-)
+local paper = Paper:new({ width = 500, height = 500 })
+local black = Pen:new({ weight = 2, color = "#000" })
+      paper:addPen(black)
+
+p = Shape.RegPolygon(paper.center, 150, 4)
+p:setPen(black)
+p:log()
+
+paper:saveTo('svg-output/testy.svg')
