@@ -155,22 +155,31 @@ function Path:getLength()
   return length
 end
 
+function Path:getPointAtDistance(distance)
+end
+
 -- get the intersections with a second path
 function Path:getIntersections(path)
   local intersections = {}
 
   for p1 = 1, #self.points do
-    for p2 = 1, #path.points do
-      local pA = self.points[p1]
-      local pB = self.points[p1 + 1] or self.points[1]
+    if p1 < #self.points or self.closed == true then
 
-      local pC = path.points[p2]
-      local pD = path.points[p2 + 1] or path.points[1]
+      for p2 = 1, #path.points do
+        if p2 < #path.points or path.closed == true then
 
-      local intersect = Point.getIntersection(pA, pB, pC, pD)
-      
-      if intersect then
-        table.insert(intersections, intersect)
+          local pA = self.points[p1]
+          local pB = self.points[p1 + 1] or self.points[1]
+
+          local pC = path.points[p2]
+          local pD = path.points[p2 + 1] or path.points[1]
+
+          local intersect = Point.getIntersection(pA, pB, pC, pD)
+          
+          if intersect then
+            table.insert(intersections, intersect)
+          end
+        end
       end
     end
   end
