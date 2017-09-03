@@ -35,7 +35,7 @@
 
 * ~~Rotate paths~~
 * ~~Rotate path around it's self~~
-* Scale paths
+* ~~Scale paths~~
 * Flip paths
 
 * ~~Get length of path~~

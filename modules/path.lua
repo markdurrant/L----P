@@ -110,6 +110,18 @@ function Path:rotate(angle, point)
   self:setBbox()
 end
 
+-- scale a path by a give factor
+function Path:scale(factor)
+  for _, point in ipairs(self.points) do
+    local angle = self.center:getAngleTo(point)
+    local distance = self.center:getDistanceTo(point)
+
+    point:moveVector(angle, distance * factor - distance)
+  end
+
+  self:setBbox()
+end
+
 -- move the Path in X & Y
 function Path:move(x, y)
   for _, point in ipairs(self.points) do

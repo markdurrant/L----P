@@ -12,7 +12,7 @@ local black = Pen:new({ weight = 2, color = "#000" })
 local red = Pen:new({ weight = 2, color = "#f00" })
       paper:addPens(black, red)
 
-local size = 280
+local size = 100
 
 local square = Path:new(
   Point:new(paper.center.x + size / 2, paper.center.y - size / 2),
@@ -26,6 +26,8 @@ local hexagon = Shape.RegPolygon(paper.center, 200, 6)
       hexagon:setPen(black)
 
 square.closed = true
+
+square:scale(3)
 
 local intersects = square:getIntersections(hexagon)
 
