@@ -54,7 +54,7 @@ function Point:moveVector(angle, distance)
 end
 
 -- rotate the Point around an origin (point) in degrees
-function Point:rotate(point, angle)
+function Point:rotate(angle, point)
   local radians = math.rad(angle)
 
   local x1 = self.x - point.x

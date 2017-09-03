@@ -34,7 +34,7 @@
 * ~~How to trigger bounding box reset~~
 
 * ~~Rotate paths~~
-* Rotate path around it's self
+* ~~Rotate path around it's self~~
 * Scale paths
 * Flip paths
 

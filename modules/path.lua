@@ -99,8 +99,12 @@ end
 
 -- rotate the path around an origin
 function Path:rotate(angle, point)
-  for _, point in ipairs(self.points) do
-    point:rotate(angle, point)
+  if not point then
+    point = self.center
+  end
+
+  for _, p in ipairs(self.points) do
+    p:rotate(angle, point)
   end
 
   self:setBbox()
