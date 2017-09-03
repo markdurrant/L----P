@@ -104,6 +104,10 @@ function Point:getAngleTo(point)
   return angle
 end
 
+function Point.getIntersection(p1, p2, p3, p4)
+  return Point:new(utl.getIntersection(l1.points[1], l1.points[2], l2.points[1], l2.points[2]))
+end
+
 -- print Point details
 function Point:log()
   print(string.format("point { x = %s, y = %s }", self.x, self.y))

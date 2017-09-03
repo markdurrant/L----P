@@ -64,7 +64,7 @@ function Path:addPoints(...)
   if type(t[#t]) == "number" then
     index = t[#t]
     table.remove(t, #t)
-  elseif #t == 1 then
+  elseif #t == 1 or #self.points == 0 then
     index = 0
   else
     index = #t

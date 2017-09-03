@@ -35,7 +35,7 @@ function Pen:log()
   print(penLog)
 end
 
-function Pen:addPath(...)
+function Pen:addPaths(...)
   for _, path in ipairs({ ... }) do
     table.insert(self.paths, path)
   end

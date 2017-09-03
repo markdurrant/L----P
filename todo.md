@@ -40,4 +40,4 @@
 
 * ~~Get length of path~~
 * Get point from distance along a path
-* Get path intersections
+* ~~Get path intersections~~
