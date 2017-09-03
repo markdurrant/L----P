@@ -155,6 +155,29 @@ function Path:getLength()
   return length
 end
 
+-- get the intersections with a second path
+function Path:getIntersections(path)
+  local intersections = {}
+
+  for p1 = 1, #self.points do
+    for p2 = 1, #path.points do
+      local pA = self.points[p1]
+      local pB = self.points[p1 + 1] or self.points[1]
+
+      local pC = path.points[p2]
+      local pD = path.points[p2 + 1] or path.points[1]
+
+      local intersect = Point.getIntersection(pA, pB, pC, pD)
+      
+      if intersect then
+        table.insert(intersections, intersect)
+      end
+    end
+  end
+
+  return intersections
+end
+
 -- render the Path
 function Path:render()
   local pathTag = ""

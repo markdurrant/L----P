@@ -105,7 +105,15 @@ function Point:getAngleTo(point)
 end
 
 function Point.getIntersection(p1, p2, p3, p4)
-  return Point:new(utl.getIntersection(l1.points[1], l1.points[2], l2.points[1], l2.points[2]))
+  local intersect = utl.getIntersection(p1, p2, p3, p4) 
+
+  if intersect then
+    intersect = Point:new(intersect.x, intersect.y)
+  else 
+    intersect = nil
+  end
+
+  return intersect
 end
 
 -- print Point details

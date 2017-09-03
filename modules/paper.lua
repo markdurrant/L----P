@@ -63,7 +63,7 @@ function Paper:setBBox(width, height)
   self.bottomRight  = Point:new(width, 0)
 end
 
-function Paper:addPen(...)
+function Paper:addPens(...)
   for _, pen in ipairs( {...} ) do
     table.insert(self.pens, pen)
   end

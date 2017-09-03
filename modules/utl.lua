@@ -81,10 +81,13 @@ function utl.getIntersection(p1, p2, p3, p4)
     return true
   end
 
-  local intersection
+  local intersection = {}
 
   if x == x and bboxCheck(x1, y1, x2, y2, x3, y3, x4, y4) then
-    return x, y
+    intersection.x = x
+    intersection.y = y
+
+    return intersection
   else
     return nil
   end
