@@ -55,6 +55,20 @@ function Path:setBbox()
   self.bottomRight  = Point:new(right, bottom)
 end
 
+-- close the path
+function Path:close()
+  self.closed = true
+
+  return self
+end
+
+-- open the path
+function Path:open()
+  self.closed = false
+
+  return self
+end
+
 -- add points to the Path 
 -- give an optional index to add points to the middle of a path
 function Path:addPoints(...)
