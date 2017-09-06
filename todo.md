@@ -23,6 +23,7 @@
 
 
 * ~~Look into chaining methods~~
+* Look into removing new e.g Point:new(x, y) > Point(x, y)
 * Improve log function
 * Improve random
 * Improve generators
