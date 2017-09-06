@@ -42,7 +42,7 @@ function Pen:addPaths(...)
 end
 
 function Pen:setPaper(paper)
-  table.insert(paper, self)
+  table.insert(paper.pens, self)
 end
 
 function Pen:clone()
