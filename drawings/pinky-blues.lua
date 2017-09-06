@@ -10,7 +10,7 @@ local Shape = require("modules/shape")
 local paper = Paper:new({ width = 500, height = 500 })
 local pink = Pen:new({ weight = 1.4, color = "#f09" })
 local blue = Pen:new({ weight = 1.4, color = "#09f" })
-      paper:addPens(blue, pink)
+      paper:addPens(pink, blue)
 
 local baseAngle = 20
 
@@ -32,11 +32,11 @@ for i = 1, 22 do
   pa3:moveVector(baseAngle, distance)
   pa4:moveVector(baseAngle, distance)
 
-  local poly1 = Path:new(pa2, pa3, pa4)
-        poly1:setPen(blue)
-  
   local poly2 = Path:new(pa4, pa1, pa2)
-        poly2:setPen(pink)
+        poly2:setPen(blue)
+
+  local poly1 = Path:new(pa2, pa3, pa4)
+        poly1:setPen(pink)
 end
 
 paper:saveTo('svg-output/testy.svg')

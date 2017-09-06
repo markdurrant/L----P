@@ -24,6 +24,8 @@ end
 -- add the Point to a path
 function Point:setPath(path)
   table.insert(path, self)
+
+  return self
 end
 
 -- move the Point in X & Y
@@ -32,16 +34,22 @@ function Point:move(x, y)
 
   self.x = self.x + x
   self.y = self.y + y
+
+  return self
 end
 
 -- move the Point in X
 function Point:moveX(x)
   self.x = self.x + x
+
+  return self
 end
 
 -- move the Point in Y
 function Point:moveY(y)
   self.y = self.y + y
+
+  return self
 end
 
 -- move the Point along a vector (angle & distance)
@@ -51,6 +59,8 @@ function Point:moveVector(angle, distance)
 
   self.x = self.x + math.cos(angle) * distance
   self.y = self.y + math.sin(angle) * distance
+
+  return self
 end
 
 -- rotate the Point around an origin (point) in degrees
@@ -65,6 +75,8 @@ function Point:rotate(angle, point)
 
   self.x = x2 + point.x
   self.y = y2 + point.y
+
+  return self
 end
 
 -- get the distance to a second point

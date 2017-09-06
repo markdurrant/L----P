@@ -75,6 +75,8 @@ function Path:addPoints(...)
   end
 
   self:setBbox()
+
+  return self
 end
 
 -- remove points from the Path at a specified position
@@ -90,11 +92,15 @@ function Path:removePoints(index, number)
   end
 
   self:setBbox()
+
+  return self
 end
 
 -- set the pen for the Path
 function Path:setPen(pen)
   table.insert(pen.paths, self)
+
+  return self
 end
 
 -- rotate the path around an origin
@@ -108,6 +114,8 @@ function Path:rotate(angle, point)
   end
 
   self:setBbox()
+
+  return self
 end
 
 -- scale a path by a give factor
@@ -120,6 +128,8 @@ function Path:scale(factor)
   end
 
   self:setBbox()
+
+  return self
 end
 
 -- move the Path in X & Y
@@ -129,6 +139,8 @@ function Path:move(x, y)
   end
 
   self:setBbox()
+
+  return self
 end
 
 -- move the Path in X
@@ -138,6 +150,8 @@ function Path:moveX(x)
   end
 
   self:setBbox()
+
+  return self
 end
 
 -- move the Path in Y
@@ -147,6 +161,20 @@ function Path:moveY(y)
   end
 
   self:setBbox()
+
+  return self
+end
+
+-- move the Path along a vector (angle & distance)
+-- North = 0, East = 90, South = 180, West = 270
+function Path:moveVector(angle, distance)
+  for _, point in ipairs(self.points) do
+    point:moveVector(angle, distance)
+  end
+
+  self:setBbox()
+
+  return self
 end
 
 -- create a copy of the Path

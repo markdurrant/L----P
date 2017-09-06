@@ -22,7 +22,7 @@
   * 'arc' (regular polygon type arc)
 
 
-* Look into chaining methods
+* ~~Look into chaining methods~~
 * Improve log function
 * Improve random
 * Improve generators
