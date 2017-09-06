@@ -9,6 +9,7 @@
 * Move out best candidate into utl
 * Find a place for point:newOAD(origin, angle, distance)
 * Find place for shape functions
+* Create drawing directory
 
 * Add groups
 
