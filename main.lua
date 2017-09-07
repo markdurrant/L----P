@@ -43,9 +43,13 @@ local square = Path:new(
   Point:new(paper.center.x + size / 2, paper.center.y - size / 2),
   Point:new(paper.center.x + size / 2, paper.center.y + size / 2),
   Point:new(paper.center.x - size / 2, paper.center.y + size / 2)
-):close():setPen(cyan)
+):setPen(cyan)
 
-cross(square.points[1])
+local five = Shape.RegPolygon(paper.center, 150, 5):setPen(cyan)
+
+local p1 = five:getPointAtDistance(25)
+cross(p1)
+
 
 paper:addPens(cyan, pink)
 paper:saveTo('svg-output/testy.svg')

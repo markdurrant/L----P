@@ -213,7 +213,24 @@ function Path:getLength()
   return length
 end
 
+-- get a point a specified distance along a path
 function Path:getPointAtDistance(distance)
+  local point 
+
+  for i = 1, #self.points - 1 do
+    local segmentLength = self.points[i]:getDistanceTo(self.points[i + 1])
+
+    if distance > segmentLength then
+      distance = distance - segmentLength
+    elseif distance >= 0 then
+      local angle = self.points[i]:getAngleTo(self.points[i + 1])
+      
+      point = Point:new(self.points[i].x, self.points[i].y):moveVector(angle, distance)
+      distance = distance - segmentLength
+    end
+  end
+
+  return point
 end
 
 -- get the intersections with a second path
