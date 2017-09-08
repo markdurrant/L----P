@@ -11,7 +11,10 @@
 * Find place for shape functions
 * ~~Create drawing directory~~
 
+* Look at global paper (not needing to create and add pens)
+
 * Add groups
+* add compound paths
 
 * Create shape functions
   * ~~line~~
@@ -24,7 +27,7 @@
 
 * ~~Look into chaining methods~~
 * Look into removing new e.g Point:new(x, y) > Point(x, y)
-* Improve log function
+* Improve log function (standard table log)
 * ~~Improve random~~
 * Improve generators
 
@@ -39,6 +42,21 @@
 * ~~Rotate path around it's self~~
 * ~~Scale paths~~
 * Flip paths
+
+* offset paths
+* outline paths
+
+* pathfinder combine
+* pathfinder remove
+* pathfinder divide
+* pathfinder intersect
+
+* Join paths
+* split paths
+
+* look at probiblity random
+
+* generalise best candidate
 
 * ~~Get length of path~~
 * ~~Get point from distance along a path~~
