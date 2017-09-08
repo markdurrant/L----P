@@ -8,8 +8,7 @@ local Point = require("modules/point")
 local Shape = require("modules/shape")
 
 local paper = Paper:new({ width = 500, height = 500 })
-local cyan = Pen:new({ weight = 2, color = "0ef" })
-local pink = Pen:new({ weight = 2, color = "f09" })
+local black = Pen:new({ weight = 2, color = "#000" })
 
 
 local function dot(p)
@@ -72,29 +71,43 @@ local function sample(list)
 end
 
 local angles = {}
-local splits = {}
+local innerRadius = 40
+local ringSize = 1
 
-for i = 1, 40 do
+for i = 1, 60 do
   table.insert(angles, sample(angles))
 end
 
 for _, a in ipairs(angles) do
   Path:new(
-    paper.center:clone():moveVector(a, 100),
-    paper.center:clone():moveVector(a, 110)
-  ):setPen(pink)
+    paper.center:clone():moveVector(a, innerRadius),
+    paper.center:clone():moveVector(a, innerRadius + ringSize)
+  ):setPen(black)
 end
 
-for i = 1, 20 do
-  local a = math.floor(utl.random(#angles) + 1)
+for i = 1, 180 do
+  local split = math.floor(utl.random(#angles))
+  local plus = angles[split] + 1.5
+  local minus = angles[split] - 1.5
 
   Path:new(
-    paper.center:clone():moveVector(angles[a] - 1.5, 114),
-    paper.center:clone():moveVector(angles[a], 110),
-    paper.center:clone():moveVector(angles[a] + 1.5, 114)
-  ):setPen(pink)
+    paper.center:clone():moveVector(minus, innerRadius + ringSize  + ringSize * i),
+    paper.center:clone():moveVector(angles[split], innerRadius + ringSize * i),
+    paper.center:clone():moveVector(plus, innerRadius + ringSize  + ringSize * i)
+  ):setPen(black)
+
+  table.remove(angles, split)
+
+  for _, a in ipairs(angles) do
+    Path:new(
+      paper.center:clone():moveVector(a, innerRadius + ringSize * i),
+      paper.center:clone():moveVector(a, innerRadius + ringSize + ringSize * i)
+    ):setPen(black)
+  end
+
+  table.insert(angles, plus)
+  table.insert(angles, minus)
 end
 
-
-paper:addPens(cyan, pink)
+paper:addPens(black)
 paper:saveTo('svg-output/testy.svg')
