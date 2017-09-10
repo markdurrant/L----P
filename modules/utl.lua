@@ -16,9 +16,18 @@ function utl.clone (t) -- deep-copy a table
 end
 
 function utl.random(a, b)
+  local devRandom = assert(io.open('/dev/random', 'rb')):read()		
+  local devSeed = 0		
   local random = 0
-
-  math.randomseed(os.clock() * 1000000000)
+      
+  local i = 1		
+          
+  while i < #devRandom and i < 5 do
+    devSeed = devSeed .. devRandom:byte(i)		
+    i = i + 1		
+  end		
+      
+  math.randomseed(tonumber(devSeed))
 
   if type(a) == 'number' and type(b) == 'number' then
     random = math.random() * (b - a) + a
