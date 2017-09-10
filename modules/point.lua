@@ -137,6 +137,46 @@ function Point.getIntersection(p1, p2, p3, p4)
   return intersect
 end
 
+-- find a point that is furtherst away from all other points in the list,
+-- and add it to the list
+function Point:bestCandidate(list, pointGenerator, noCandidates)
+  local bestCandidate
+  local bestDistance = 0
+
+  -- find the closest point in list of points
+  local function closest(list, point)
+    local closest = list[1]
+    local bestDistance = closest:getDistanceTo(point)
+
+    for _, p in ipairs(list) do
+      local distance = p:getDistanceTo(point)
+
+      if distance  < bestDistance then
+        bestDistance = distance
+        closest = p
+      end
+    end
+
+    return closest
+  end
+
+  if #list == 0 then
+    table.insert(list, pointGenerator())
+  end
+
+  for i = 1, noCandidates do
+    local candidate = pointGenerator()
+    local distance = closest(list, candidate):getDistanceTo(candidate)
+
+    if distance > bestDistance then
+      bestDistance = distance
+      bestCandidate = candidate
+    end
+  end
+
+  table.insert(list, bestCandidate)
+end
+
 -- print Point details
 function Point:log()
   print(string.format("point { x = %s, y = %s }", self.x, self.y))

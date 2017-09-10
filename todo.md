@@ -6,7 +6,7 @@
 
 * ~~Capitalize constructors, Paper, Pen, Path, Point~~
 
-* Move out best candidate into utl
+* ~~Move out best candidate into utl~~
 * Find a place for point:newOAD(origin, angle, distance)
 * Find place for shape functions
 * ~~Create drawing directory~~
@@ -28,7 +28,7 @@
 * ~~Look into chaining methods~~
 * Look into removing new e.g Point:new(x, y) > Point(x, y)
 * Improve log function (standard table log)
-* ~~Improve random~~
+* Improve random
 * Improve generators
 
 * ~~Remove points from path~~
@@ -56,7 +56,7 @@
 
 * look at probiblity random
 
-* generalise best candidate
+* ~~generalise best candidate~~
 
 * ~~Get length of path~~
 * ~~Get point from distance along a path~~
