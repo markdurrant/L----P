@@ -16,6 +16,15 @@ function Point:new(x, y)
   return point
 end
 
+-- create a new point from vector (origin, angle, distance)
+-- North = 0, East = 90, South = 180, West = 270
+function Point:newVector(origin, angle, distance)
+  point = Point:new(origin.x, origin.y)
+  point:moveVector(angle, distance)
+
+  return point
+end
+
 -- create a copy of the Point
 function Point:clone()
   return utl.clone(self)

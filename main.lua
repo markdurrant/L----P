@@ -10,7 +10,5 @@ local Shape = require("modules/shape")
 local paper = Paper:new({ width = 500, height = 500 })
 local black = Pen:new({ weight = 2, color = "#000" })
 
-
-
 paper:addPens(black)
 paper:saveTo('svg-output/testy.svg')
