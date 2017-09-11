@@ -8,87 +8,85 @@ local Point = require("modules/point")
 local Shape = require("modules/shape")
 
 local paper = Paper:new({ width = 500, height = 500 })
-local black = Pen:new({ weight = 2, color = "#000" })
+local black = Pen:new({ weight = 1.5, color = "#000" })
+local pink = Pen:new({ weight = 1, color = "#f09" })
+local blue = Pen:new({ weight = 1, color = "#09f" })
 
 
-local function dot(p)
-  Shape.RegPolygon(p, 3, 6):setPen(pink)
+-- return a random point
+local function randomPoint()
+  return Point:newVector(paper.center, utl.random(0, 360), 100)
 end
 
-local function findDistance(a, b)
-  local distance = 0
+local function spacing(list, point)
+  local spacings = {}
 
-  if a < b then
-    if b - a < 360 - b + a then
-      distance = b - a
-    else 
-      distance = 360 - b + a
-    end
-  else
-    if a - b < 360 - a + b then
-      distance = a - b
+  for _, p in ipairs(list) do
+    table.insert(spacings, p:getDistanceTo(point))
+  end
+
+  table.sort(spacings, function(a, b) return a < b end)
+
+  return spacings[2] + spacings[3]
+end
+
+local ringPoints = {}
+
+for i = 1, 60 do
+  Point:bestCandidate(ringPoints, randomPoint, 10)
+end
+
+function drawRing()
+  local removals = {}
+  local additions = {}
+
+  for i, p in ipairs(ringPoints) do
+    if spacing(ringPoints, p) > 30 then
+      local p2 = Point:newVector(paper.center, p:getAngleTo(paper.center) - 2.5, - p:getDistanceTo(paper.center) - 18)
+      local p3 = Point:newVector(paper.center, p:getAngleTo(paper.center) + 2.5, - p:getDistanceTo(paper.center) - 18)
+
+      Path:new(
+        p2,
+        p:clone(),
+        p3
+      ):setPen(black)
+
+      table.insert(removals, i)
+      table.insert(additions, p2)
+      table.insert(additions, p3)
     else
-      distance = 360 - a + b
-    end  
-  end
+      Path:new(
+        p:clone(),
+        p:clone():moveVector(p:getAngleTo(paper.center), - 18)
+      ):setPen(black)
 
-  return distance
-end
-
-local function findClosest(list, candidate)
-  local bestDistance = findDistance(list[1], candidate)
-  local closest = list[1]
-
-  for _, a in ipairs(list) do
-    if findDistance(a, candidate) < bestDistance then
-      bestDistance = findDistance(a, candidate)
-      closest = a
+      p:moveVector(p:getAngleTo(paper.center), - 18)
     end
+  end 
+
+  for i, r in ipairs(removals) do
+    print(#ringPoints, r)
+    table.remove(ringPoints, r - i + 1)
   end
 
-  return closest
-end
-
-local function sample(list)
-  local bestCandidate 
-  local bestDistance = 0
-
-  if #list == 0 then
-    table.insert(list, utl.random(360))
+  for _, a in ipairs(additions) do
+    table.insert(ringPoints, a)
   end
 
-  for i = 1, 10 do
-    local candidate = utl.random(360)
-    local distance = findDistance(findClosest(list, candidate), candidate)
-
-    if distance > bestDistance then
-      bestDistance = distance
-      bestCandidate = candidate
-    end
-  end
-
-  return bestCandidate
+  return ringPoints
 end
 
-local angles = {}
-local innerRadius = 40
-local ringSize = 4
-
-
-for i = 1, 20 do
-  table.insert(angles, sample(angles))
+for _, p in ipairs(ringPoints) do
+  Shape.RegPolygon(p, 1, 6):setPen(pink)
 end
 
-for _, a in ipairs(angles) do
-  Path:new(
-    paper.center:clone():moveVector(a, innerRadius),
-    paper.center:clone():moveVector(a, innerRadius + ringSize)
-  ):setPen(black)
+drawRing()
+
+for _, p in ipairs(ringPoints) do
+  Shape.RegPolygon(p, 1, 6):setPen(pink)
 end
 
-for i = 1, 10 do
+drawRing()
 
-end
-
-paper:addPens(black)
+paper:addPens(black, pink, blue)
 paper:saveTo('svg-output/testy.svg')
