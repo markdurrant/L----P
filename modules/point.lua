@@ -125,13 +125,34 @@ function Point:getAngleTo(point)
   return angle
 end
 
-function Point.getIntersection(p1, p2, p3, p4)
-  local intersect = utl.getIntersection(p1, p2, p3, p4) 
+-- get intersection of two lines
+-- from https://codea.io/talk/discussion/5930/line-segment-intersection
+function Point.getIntersection(path1PointA, path1PointB, path2PointA, path2PointB)
+  local intersect = nil
+  
+  local x1 = path1PointA.x
+  local y1 = path1PointA.y
+  
+  local x2 = path1PointB.x
+  local y2 = path1PointB.y
+  
+  local x3 = path2PointA.x
+  local y3 = path2PointA.y
+  
+  local x4 = path2PointB.x
+  local y4 = path2PointB.y
 
-  if intersect then
-    intersect = Point:new(intersect.x, intersect.y)
-  else 
-    intersect = nil
+  local d = (y4-y3) * (x2-x1) - (x4-x3) * (y2-y1)
+  local Ua_n = ((x4-x3) * (y1-y3) - (y4-y3) * (x1-x3))
+  local Ub_n = ((x2-x1) * (y1-y3) - (y2-y1) * (x1-x3))
+
+  local Ua = Ua_n / d
+  local Ub = Ub_n / d
+  local px = x1 + Ua * (x2-x1)
+  local py = y1 + Ua * (y2-y1) 
+
+  if Ua > 0 and Ua < 1 and Ub > 0 and Ub < 1 then 
+    intersect = Point:new(px, py)
   end
 
   return intersect
