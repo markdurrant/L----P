@@ -28,7 +28,7 @@
 * ~~Look into chaining methods~~
 * Look into removing new e.g Point:new(x, y) > Point(x, y)
 * Improve log function (standard table log)
-* Improve random
+* ~~Improve random~~
 * Improve generators
 
 * ~~Remove points from path~~
