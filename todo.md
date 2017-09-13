@@ -6,6 +6,10 @@
 
 * ~~Capitalize constructors, Paper, Pen, Path, Point~~
 
+* Add error messages to functions
+
+* Add tests?
+
 * ~~Move out best candidate into utl~~
 * Find a place for point:newOAD(origin, angle, distance)
 * Find place for shape functions
