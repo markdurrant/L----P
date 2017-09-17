@@ -1,68 +1,39 @@
-* Write start up instructions
-* Comment functions (~~point~~, ~~path~~, paper, pen, utl, shape)
-* Documentation
+- [ ] Figure out module loading
+
+- [ ] Impliment point
+- [ ] Impliment path
+- [ ] Impliment pen
+- [ ] Impliment paper
+
+- [ ] Create some examples
+
+- [ ] Find a better name
+
+- [ ] Release 
 
 ---
 
-* ~~Capitalize constructors, Paper, Pen, Path, Point~~
+- [ ] Add shapes to path
 
-* Add error messages to functions
+- [ ] Figure out if utilities file is needed and what needs to be in there
 
-* Add tests?
+- [ ] Figure out having only one paper object, having pens be added automatically
 
-* ~~Move out best candidate into utl~~
-* Find a place for point:newOAD(origin, angle, distance)
-* Find place for shape functions
-* ~~Create drawing directory~~
+- [ ] Improve/generalize clone() 
 
-* Look at global paper (not needing to create and add pens)
+- [ ] Improve/generalize log()
 
-* Add groups
-* add compound paths
+- [ ] Understand and impliment intersections
 
-* Create shape functions
-  * ~~line~~
-  * cross
-  * ~~rectangles~~
-  * ~~regular polygon~~
-  * regular polygon (squashed/ellipse)
-  * 'arc' (regular polygon type arc)
+- [ ] Offset paths
+- [ ] Outline paths
 
+- [ ] Pathfinder combine
+- [ ] Pathfinder remove
+- [ ] Pathfinder divide
+- [ ] Pathfinder intersect
 
-* ~~Look into chaining methods~~
-* Look into removing new e.g Point:new(x, y) > Point(x, y)
-* Improve log function (standard table log)
-* ~~Improve random~~
-* Improve generators
+- [ ] Join paths
+- [ ] Split paths
 
-* ~~Remove points from path~~
-* ~~Insert points at a location to paths~~
-* create random point
-
-* ~~Set bounding box of paths~~
-* ~~How to trigger bounding box reset~~
-
-* ~~Rotate paths~~
-* ~~Rotate path around it's self~~
-* ~~Scale paths~~
-* Flip paths
-
-* offset paths
-* outline paths
-
-* pathfinder combine
-* pathfinder remove
-* pathfinder divide
-* pathfinder intersect
-
-* Join paths
-* split paths
-
-* look at probiblity random
-
-* ~~generalise best candidate~~
-
-* ~~Get length of path~~
-* ~~Get point from distance along a path~~
-* ~~Get path intersections~~
-* ~~Improve get intersections~~
+- [ ] Look at useful random types. Probability noise, useful noise ect
