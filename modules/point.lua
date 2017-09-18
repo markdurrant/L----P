@@ -1,5 +1,5 @@
 -- Set up Point class
-local pointTable = { label = "Point" }
+local pointTable = { label = 'Point' }
 
 -- Return a new point with optional X & Y
 -- ↓ Not yet imlipmented ↓
