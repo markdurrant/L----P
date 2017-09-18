@@ -1,24 +1,33 @@
 -- Set up Point class
-local pointClass = { label = "Point" }
+local pointTable = { label = "Point" }
 
 -- Return a new point with optional X & Y
+-- ↓ Not yet imlipmented ↓
+-- If X & Y values are not supplied the center of the paper will be used for X & Y values.
 function Point(x, y)
   local point = {}
         point.x = x or 0
         point.y = y or x or 0
 
-  setmetatable(point, { __index = pointClass })
+  setmetatable(point, { __index = pointTable })
 
   return point
 end
 
 -- Return a new point using a vector and an optional origin.
-function pointClass:fromVector(direction, length, origin)
-  
+-- ↓ Not yet imlipmented ↓
+-- If an origin is not supplied the center of the paper will be used as the origin
+function PointFromVector(direction, length, origin)
+  local x = origin.x
+  local y = origin.y
+
+  local point = Point(x, y):moveVector(direction, length)
+
+  return point
 end
 
 -- Move the Point in X & Y
-function pointClass:move(x, y)
+function pointTable:move(x, y)
   if not y then
     y = x
   end
@@ -30,7 +39,7 @@ function pointClass:move(x, y)
 end
 
 -- Move the Point along a vector
-function pointClass:moveVector(direction, length)
+function pointTable:moveVector(direction, length)
   angle = math.rad(direction - 90) -- rotate counter-clockwise to make 'north' = 0 degrees
 
   self.x = self.x + math.cos(angle) * length
@@ -40,21 +49,23 @@ function pointClass:moveVector(direction, length)
 end
 
 -- Rotate the Point around an origin (point) in degrees
-function pointClass:rotate(angle, point)
-  local angle = math.rad(angle)
+function pointTable:rotate(angle, point)
+  local radians = math.rad(angle)
 
   local x1 = self.x - point.x
   local y1 = self.y - point.y
 
-  local x2 = x1 + math.cos(angle) - y1 * math.sin(angle)
-  local y2 = y1 + math.sin(angle) + y1 * math.cos(angle)
+  local x2 = x1 * math.cos(radians) - y1 * math.sin(radians)
+  local y2 = x1 * math.sin(radians) + y1 * math.cos(radians)
 
   self.x = x2 + point.x
-  self.y = x2 + point.y
+  self.y = y2 + point.y
+
+  return self
 end
 
 -- Return the distance between the Point and a second point.
-function pointClass:distanceTo(point)
+function pointTable:distanceTo(point)
   local a = self.x - point.x
   local b = self.y - point.y
 
@@ -72,7 +83,7 @@ function pointClass:distanceTo(point)
 end
 
 -- Return the angle between the point and a second point.
-function pointClass:angleTo(point)
+function pointTable:angleTo(point)
   local a = self.x - point.x
   local b = self.y - point.y
 
@@ -92,12 +103,13 @@ function pointClass:angleTo(point)
 end
 
 -- Return an identical copy of a point.
-function pointClass:clone()
+-- ↓ Not yet imlipmented ↓
+function pointTable:clone()
   print("not yet implimented")
 end
 
 -- Print the X & Y values for the point
-function pointClass:log()
+function pointTable:log()
   print(string.format("Point { x = %s, y = %s }", self.x, self.y))
 end
 

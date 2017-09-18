@@ -1,10 +1,9 @@
 require("modules/luaSVG")
 
-local p1 = Point(0, 40)
-local p2 = Point()
+local p1 = Point(100, 100)
+local p2 = PointFromVector(90, 100, p1)
 
 p1:log()
+p2:log()
 
-p1:rotate(90, p2)
-
-p1:log()
+print(p1:angleTo(p2))
