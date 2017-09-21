@@ -95,12 +95,40 @@ end
 
 -- Remove points from the path using an index and an optional number of points.
 function pathTable:removePoints(index, number) 
-  for i = 1, number do
+  local n = 1
+
+  if number then
+    n = number
+  end
+
+  for i = 1, n do
     table.remove(self.points, index)
   end
   
   self:setBox()
 
+  return self
+end
+
+-- Move the path along the X & Y axes.
+function pathTable:move(x, y)
+  for _, p in ipairs(self.points) do
+    p:move(x, y)
+  end
+  
+  self:setBox()
+  
+  return self
+end
+
+-- Move the path along a vector.
+function pathTable:moveVector(direction, length)
+  for _, p in ipairs(self.points) do
+    p:moveVector(direction, length)
+  end
+  
+  self:setBox()
+  
   return self
 end
 
