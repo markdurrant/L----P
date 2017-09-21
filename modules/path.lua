@@ -132,5 +132,53 @@ function pathTable:moveVector(direction, length)
   return self
 end
 
+-- Rotate the path clockwise around an optional origin point.
+function pathTable:rotate(angle, point)
+  local origin = self.center
+
+  if point then
+    origin = point
+  end
+  
+  for _, p in ipairs(self.points) do
+    p:rotate(angle, origin)
+  end
+
+  self:setBox()
+  
+  return self
+end
+
+-- Scale the path by a factor.
+function pathTable:scale(factor)
+  for _, p in ipairs(self.points) do
+    local direction = self.center:angleTo(p)
+    local length = self.center:distanceTo(p)
+
+    p:moveVector(distance, length * factor - length)
+  end
+  
+  self:setBox()
+  
+  return self
+end
+
+-- Return the total length of the path.
+function pathTable:length()
+  local length = 0
+  
+  for i = 1, #self.points - 1 do
+    length = length + self.points[i]:distanceTo(self.points[i + 1])
+  end
+
+  if self.closed == true then
+    length = length + self.points[#self.points]:distanceTo(self.points[1])
+  end
+
+  return length
+end
+
+
+
 -- Return Path generator
 return Path
