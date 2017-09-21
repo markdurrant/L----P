@@ -11,5 +11,8 @@ local path1 = Path()
       path1:addPoints(t)
       path1:addPoints({p2}, 2)
 
-print(path1.points[4]:log())
+print(#path1.points)
+
+      path1:removePoints(1)
+
 print(#path1.points)

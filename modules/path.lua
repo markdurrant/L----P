@@ -93,5 +93,16 @@ function pathTable:addPoints(points, index)
   return self
 end
 
+-- Remove points from the path using an index and an optional number of points.
+function pathTable:removePoints(index, number) 
+  for i = 1, number do
+    table.remove(self.points, index)
+  end
+  
+  self:setBox()
+
+  return self
+end
+
 -- Return Path generator
 return Path
