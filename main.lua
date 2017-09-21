@@ -6,8 +6,10 @@ local p3 = Point(30, 30)
 
 local t = {p1, p2, p3}
 
-local path1 = Path(p1)
+local path1 = Path()
 
-      path1:addPoints(p2)
+      path1:addPoints(t)
+      path1:addPoints({p2}, 2)
 
-print(path1.points[2]:log())
+print(path1.points[4]:log())
+print(#path1.points)

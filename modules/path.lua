@@ -4,25 +4,15 @@ require("modules/point")
 -- Set up Path class, and set closed to false
 local pathTable = { label = 'Path', closed = false }
 
--- Return a new path with an optional table or list of points.
-function Path(...)
+-- Return a new path with an optional table of points.
+function Path(points)
   local path = {}
-  local t = { ... }
+        path.points = {}
 
   setmetatable(path, { __index = pathTable })
 
-  if not t[1] then -- if the Path is created with no points
-    path.points = {}
-  elseif t[1].label == 'Point' then -- if a list of points is supplied
-    path.points = t
-
-    path:setBox()
-  else -- if a table of points is supplied
-    path.points = {}
-
-    for _, p in ipairs(t[1]) do
-      table.insert(path.points, p)
-    end
+  if points then
+    path.points = points
 
     path:setBox()
   end
@@ -87,21 +77,15 @@ end
 
 -- add points to the Path 
 -- give an optional index to add points to the middle of a path
-function pathTable:addPoints(...)
-  local t = { ... }
-  local index = 0
-
-  if type(t[#t]) == "number" then -- if an index is supplied
-    index = t[#t]
-    table.remove(t, #t)
-  elseif #t == 1 or #self.points == 0 then -- only one point is supplied
-    index = 0
-  else -- if a table of points is supplied
-    index = #t
+function pathTable:addPoints(points, index)
+  local i = #self.points + 1
+  
+  if index then
+    i = index + 1
   end
 
-  for i, point in ipairs(t) do
-    table.insert(self.points, index + i, point)
+  for _, p in ipairs(points) do
+    table.insert(self.points, i, p)
   end
 
   self:setBox()
