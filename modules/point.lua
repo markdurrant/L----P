@@ -1,3 +1,6 @@
+-- get Utilities module
+local utl = require("modules/utilities")
+
 -- Set up Point class
 local pointTable = { label = 'Point' }
 
@@ -103,14 +106,18 @@ function pointTable:angleTo(point)
 end
 
 -- Return an identical copy of a point.
--- ↓ Not yet imlipmented ↓
 function pointTable:clone()
-  print("not yet implimented")
+  return utl.clone(self)
+end
+
+-- Return a string with the X & Y values for the point
+function pointTable:getLog()
+  return string.format("Point { x = %s, y = %s }", self.x, self.y)
 end
 
 -- Print the X & Y values for the point
 function pointTable:log()
-  print(string.format("Point { x = %s, y = %s }", self.x, self.y))
+  print(self:getLog())
 end
 
 -- Return Point generator

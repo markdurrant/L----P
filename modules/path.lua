@@ -1,4 +1,5 @@
--- get Point module
+-- get Utilities & Point modules
+local utl = require("modules/utilities")
 require("modules/point")
 
 -- Set up Path class, and set closed to false
@@ -212,9 +213,8 @@ function pathTable:intersections(path)
 end
 
 -- Return an identical copy of a path.
--- ↓ Not yet imlipmented ↓
 function pathTable:clone()
-  print("not yet implimented")
+  return utl.clone(self)
 end
 
 -- Set the pen to draw the path.
@@ -247,9 +247,21 @@ function pathTable:render()
   return pathTag
 end
 
--- Print path information including all child points information.
+-- Return a string with path information including all child points information.
+function pathTable:getLog()
+  local log = string.format("Path { closed  = %s }", self.closed)
+  local pointLog = ""
+
+  for i, p in ipairs(self.points) do
+    pointLog = pointLog .. string.format("\n%d: ", i) .. p:getLog()
+  end
+
+  return log .. utl.indent(pointLog)
+end
+
+-- print path information including all child points information.
 function pathTable:log()
-  -- body
+  print(self:getLog())
 end
 
 -- Return Path generator
