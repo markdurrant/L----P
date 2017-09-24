@@ -178,7 +178,79 @@ function pathTable:length()
   return length
 end
 
+-- Return the point at a specified distance along a path.
+-- NEED TO ADD ABILITY TO GET POINT FROM CLOSED PATHS
+function pathTable:pointAtDistance(distance)
+  local point 
 
+  for i = 1, #self.points - 1 do
+    local segmentLength = self.points[i]:distanceTo(self.points[i + 1])
+
+    if distance > segmentLength then
+      distance = distance - segmentLength
+    elseif distance >= 0 then
+      local angle = self.points[i]:angleTo(self.points[i + 1])
+      
+      point = Point:new(self.points[i].x, self.points[i].y):moveVector(angle, distance)
+      distance = distance - segmentLength
+    end
+  end
+
+  return point
+end
+
+-- Return `true` if the path intersects itself. Return false if not.
+-- ↓ Not yet imlipmented ↓
+function pathTable:intersectsSelf()
+  print("not yet implimented")
+end
+
+-- Return a table of points containing the intersections with a specified path.
+-- ↓ Not yet imlipmented ↓
+function pathTable:intersections(path)
+  print("not yet implimented")
+end
+
+-- Return an identical copy of a path.
+-- ↓ Not yet imlipmented ↓
+function pathTable:clone()
+  print("not yet implimented")
+end
+
+-- Set the pen to draw the path.
+function pathTable:setPen(pen)
+  table.insert(pen.paths, self)
+
+  return self
+end
+
+-- Return a string of a SVG `<path>` element for the path.
+function pathTable:render()
+  local pathTag = ""
+
+  for i, p in ipairs(self.points) do
+    if i == 1 then
+      pathTag = "M "
+    else
+      pathTag = pathTag .. " L"
+    end
+
+    pathTag = pathTag .. p.x .. " " .. p.y
+  end
+
+  if self.closed == true then
+    pathTag = pathTag .. " Z"
+  end
+
+  pathTag = '<path d="' .. pathTag .. '"/>'
+
+  return pathTag
+end
+
+-- Print path information including all child points information.
+function pathTable:log()
+  -- body
+end
 
 -- Return Path generator
 return Path

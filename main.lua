@@ -13,3 +13,9 @@ path1.points[1]:log()
 path1:rotate(90)
 
 path1.points[1]:log()
+
+print(path1:render())
+
+path1:close()
+
+print(path1:render())
