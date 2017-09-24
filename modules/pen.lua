@@ -169,7 +169,7 @@ function penTable:render()
   end
 
   if self.width then
-    style = string.format("stroke-width: %s; ", self.width) .. style
+    style = string.format("stroke-width: %f; ", self.width) .. style
   end
 
   style = 'style="' .. style .. '"'
@@ -189,9 +189,9 @@ function penTable:getLog()
   local pathLog = ""
 
   if self.width and self.color then
-    log = log .. string.format("{ width = %d, color = %s }", self.width, self.color)
+    log = log .. string.format("{ width = %f, color = %s }", self.width, self.color)
   elseif self.width then
-    log = log .. string.format("{ width = %d }", self.width)
+    log = log .. string.format("{ width = %f }", self.width)
   elseif self.color then
     log = log .. string.format("{ color = %s }", self.color)
   end

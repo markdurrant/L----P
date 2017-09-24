@@ -1,8 +1,8 @@
--- get Utilities & Point modules
+-- get Utilities & Point modules.
 local utl = require("modules/utilities")
 require("modules/point")
 
--- Set up Path class, and set closed to false
+-- Set up Path class, and set closed to false.
 local pathTable = { label = 'Path', closed = false }
 
 -- Return a new path with an optional table of points.

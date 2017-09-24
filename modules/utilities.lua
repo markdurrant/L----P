@@ -42,4 +42,13 @@ function utl.indent(str)
   return utl.appendToString(str, 2)
 end
 
+-- Save a file.
+function saveFile(filename, content)
+  local output = assert(io.open(filename, 'w'))
+        output:write(content)
+        output:close()
+
+  print('\n' .. '[ ' .. filename .. ' saved @ ' .. os.date() .. ' ]')
+end
+
 return utl
