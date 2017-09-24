@@ -96,11 +96,7 @@ end
 
 -- Remove points from the path using an index and an optional number of points.
 function pathTable:removePoints(index, number) 
-  local n = 1
-
-  if number then
-    n = number
-  end
+  local n = number or 1
 
   for i = 1, n do
     table.remove(self.points, index)
@@ -135,11 +131,7 @@ end
 
 -- Rotate the path clockwise around an optional origin point.
 function pathTable:rotate(angle, point)
-  local origin = self.center
-
-  if point then
-    origin = point
-  end
+  local origin = point or self.center
   
   for _, p in ipairs(self.points) do
     p:rotate(angle, origin)
@@ -156,7 +148,7 @@ function pathTable:scale(factor)
     local direction = self.center:angleTo(p)
     local length = self.center:distanceTo(p)
 
-    p:moveVector(distance, length * factor - length)
+    p:moveVector(direction, length * factor - length)
   end
   
   self:setBox()
@@ -253,7 +245,8 @@ function pathTable:getLog()
   local pointLog = ""
 
   for i, p in ipairs(self.points) do
-    pointLog = pointLog .. string.format("\n%d: ", i) .. p:getLog()
+    local pString = string.gsub(p:getLog(), "Point", string.format("\nPoint: %d", i))
+    pointLog = pointLog .. pString
   end
 
   return log .. utl.indent(pointLog)
