@@ -22,7 +22,7 @@ function utl.clone(table)
   return clone
 end
 
--- Append a number of charecters to the start of each line of a string.
+-- Append a number of characters to the start of each line of a string.
 function utl.appendToString(str, num, char)
   local num = num or 1
   local char = char or " "
@@ -42,7 +42,7 @@ function utl.indent(str)
   return utl.appendToString(str, 2)
 end
 
--- Save a file.
+-- Save a file to supplied filename.
 function utl.saveFile(filename, content)
   local output = assert(io.open(filename, 'w'))
         output:write(content)
