@@ -59,12 +59,30 @@ function Paper(width, height)
   end
 
   -- Save the the rendered `<SVG>` element in a html document for easy previewing. 
-  function paper:savePreview()
-    
+  function paper:savePreview(filename)
+    local html = '<!doctype html><html><head><title>SVG preview</title>' ..
+                 '<style type="text/css"> html { height: 100%; }' ..
+                 'body { display: flex; justify-content: center; align-items:' .. 'center; height: 100%; margin: 0; background: #ddd; }' ..
+                 'svg { background: white;' ..
+                 'box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .15);' ..
+                 'border-radius: 1px; } </style></head><body>' .. 
+                 self:render() .. '</body></html>'
+
+    utl.saveFile(filename, html)
   end
   
   -- Return a string with paper information including all child pens information. Used internally.
   function paper:getLog()
+    local log = string.format("Paper { width = %d, height = %d }", self.width, self.height)
+    local penLog = ""
+    
+    for i, p in ipairs(self.pens) do
+      local pString = string.gsub(p:getLog(), "Pen", string.format("\nPen: %d", i))
+
+      penLog = penLog .. pString
+    end
+
+    return log .. utl.indent(penLog)
   end
 
   -- Print paper information including all child pens information.

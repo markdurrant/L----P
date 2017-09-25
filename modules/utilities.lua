@@ -43,7 +43,7 @@ function utl.indent(str)
 end
 
 -- Save a file.
-function saveFile(filename, content)
+function utl.saveFile(filename, content)
   local output = assert(io.open(filename, 'w'))
         output:write(content)
         output:close()

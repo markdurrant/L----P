@@ -22,4 +22,7 @@ local pen1 = Pen(t)
 local paper = Paper(500, 500)
       paper:addPens({pen1})
 
-print(paper:render())
+-- print(paper:render())
+-- paper:log()
+
+paper:savePreview("test.html")
