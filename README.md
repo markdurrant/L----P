@@ -20,5 +20,5 @@ Next clone the repo.
 
 To run Lua SVG simply navigate to the project directory and run the file you wish to draw.
 
-    $ cd /LuaSvg/
+    $ cd /L----P/
     $ luajit main.lua
