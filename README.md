@@ -1,4 +1,4 @@
-# Lua SVG
+# L----P
 
 Simple SVG generation in Lua
 
