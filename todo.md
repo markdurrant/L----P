@@ -1,9 +1,9 @@
-- [ ] Figure out module loading
+- [x] Figure out module loading
 
-- [ ] Impliment point
-- [ ] Impliment path
-- [ ] Impliment pen
-- [ ] Impliment paper
+- [x] Impliment point
+- [x] Impliment path
+- [x] Impliment pen
+- [x] Impliment paper
 
 - [ ] Create some examples
 

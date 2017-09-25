@@ -7,7 +7,6 @@ local p3 = p1:clone():move(10, 10)
 local path1 = Path({p1, p2, p3})
 local path2 = path1:clone():move(10, 10)
 
--- path1:log()
 local t = { paths = { path1 } }
 
 local pen1 = Pen(t)
@@ -17,12 +16,7 @@ local pen1 = Pen(t)
       pen1:moveVector(10, 10)
       pen1:scale(2)
 
--- print(pen1:render())
-
 local paper = Paper(500, 500)
       paper:addPens({pen1})
 
--- print(paper:render())
--- paper:log()
-
-paper:savePreview("test.html")
+print(paper:render())
