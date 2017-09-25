@@ -21,8 +21,8 @@ function Paper(width, height)
     local i = index or #self.pens
           i = i + 1
 
-    for _, p in ipairs(points) do
-      table.insert(self.points, i, p)
+    for _, p in ipairs(pens) do
+      table.insert(self.pens, i, p)
     end
   end
 
@@ -31,7 +31,7 @@ function Paper(width, height)
     local n = number or 1
 
     for i = 1, n do
-      table.remove(self.paths, index)
+      table.remove(self.pens, index)
     end
   end
 
@@ -61,6 +61,15 @@ function Paper(width, height)
   -- Save the the rendered `<SVG>` element in a html document for easy previewing. 
   function paper:savePreview()
     
+  end
+  
+  -- Return a string with paper information including all child pens information. Used internally.
+  function paper:getLog()
+  end
+
+  -- Print paper information including all child pens information.
+  function paper:log()
+    print(self:getLog())
   end
 
   return paper

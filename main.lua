@@ -17,4 +17,9 @@ local pen1 = Pen(t)
       pen1:moveVector(10, 10)
       pen1:scale(2)
 
-print(pen1:render())
+-- print(pen1:render())
+
+local paper = Paper(500, 500)
+      paper:addPens({pen1})
+
+print(paper:render())
