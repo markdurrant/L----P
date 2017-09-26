@@ -1,5 +1,5 @@
 -- get Utilities module
-local utl = require("modules/utilities")
+local utl = require("L----P/utilities")
 
 -- Set up Point class
 local pointTable = { label = 'Point' }

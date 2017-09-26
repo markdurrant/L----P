@@ -1,6 +1,6 @@
 -- get Utilities & Path modules
-local utl = require("modules/utilities")
-require("modules/path")
+local utl = require("L----P/utilities")
+require("L----P/path")
 
 -- Set up Pen class
 local penTable = { label = 'Pen' }
