@@ -2,19 +2,19 @@
 local utl = require("L----P/utilities")
 require("L----P/point")
 
--- Return a new paper with a specified width and height.
-function Paper(width, height)
-  local paper = { width = width, height = height, pens = {} }
+-- Return a new paper with a specified table with width and heighsize.
+function Paper(size)
+  local paper = { width = size.width, height = size.height, pens = {} }
 
   paper.topLeft      = Point(0, 0)
-  paper.topCenter    = Point(width / 2, 0)
-  paper.topRight     = Point(width, 0)
-  paper.middleLeft   = Point(0, height / 2)
-  paper.center       = Point(width / 2, height / 2)
-  paper.middleRight  = Point(width, height / 2)
-  paper.bottomLeft   = Point(0, height)
-  paper.bottomCenter = Point(width / 2, height)
-  paper.bottomRight  = Point(width, height)
+  paper.topCenter    = Point(size.width / 2, 0)
+  paper.topRight     = Point(size.width, 0)
+  paper.middleLeft   = Point(0, size.height / 2)
+  paper.center       = Point(size.width / 2, size.height / 2)
+  paper.middleRight  = Point(size.width, size.height / 2)
+  paper.bottomLeft   = Point(0, size.height)
+  paper.bottomCenter = Point(size.width / 2, size.height)
+  paper.bottomRight  = Point(size.width, size.height)
 
   -- Add of a table of pens to the paper with an optional index.
   function paper:addPens(pens, index)

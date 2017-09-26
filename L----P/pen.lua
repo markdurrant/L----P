@@ -6,7 +6,7 @@ require("L----P/path")
 local penTable = { label = 'Pen' }
 
 -- Return a new pen.
--- Optionally supply a table containing paths, a pen width (number), and a pen color (Hex triplet).
+-- Optionally supply a table containing paths, a pen weight (number), and a pen color (Hex triplet).
 function Pen(table)
   local pen = {}
 
@@ -20,8 +20,8 @@ function Pen(table)
     pen.paths = {}
   end
 
-  if table.width then
-    pen.width = table.width
+  if table.weight then
+    pen.weight = table.weight
   end
 
   if table.color then
@@ -31,9 +31,9 @@ function Pen(table)
   return pen
 end
 
--- Set the pen width.
-function penTable:setWidth(width)
-  self.width = width
+-- Set the pen weight.
+function penTable:setWidth(weight)
+  self.weight = weight
 
   return self
 end
@@ -168,8 +168,8 @@ function penTable:render()
     style = string.format("stroke: %s ;", self.color) .. style
   end
 
-  if self.width then
-    style = string.format("stroke-width: %f; ", self.width) .. style
+  if self.weight then
+    style = string.format("stroke-width: %f; ", self.weight) .. style
   end
 
   style = 'style="' .. style .. '"'
@@ -188,10 +188,10 @@ function penTable:getLog()
   local log = "Pen "
   local pathLog = ""
 
-  if self.width and self.color then
-    log = log .. string.format("{ width = %f, color = %s }", self.width, self.color)
-  elseif self.width then
-    log = log .. string.format("{ width = %f }", self.width)
+  if self.weight and self.color then
+    log = log .. string.format("{ width = %f, color = %s }", self.weight, self.color)
+  elseif self.weight then
+    log = log .. string.format("{ width = %f }", self.weight)
   elseif self.color then
     log = log .. string.format("{ color = %s }", self.color)
   end

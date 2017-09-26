@@ -1,15 +1,15 @@
 local utl = {}
 
 -- Create a copy of a supplied table.
-function utl.clone(table)
-  local metatable = getmetatable(table)
+function utl.clone(original)
+  local metatable = getmetatable(original)
   local clone = {}
   
-  if type(table) ~= "table" then
-    return table
+  if type(original) ~= "table" then
+    return original
   end 
 
-  for k, v in pairs(table) do
+  for k, v in pairs(original) do
     if type(v) == "table" then
       clone[k] = utl.clone(v)
     else
@@ -48,7 +48,7 @@ function utl.saveFile(filename, content)
         output:write(content)
         output:close()
 
-  print('\n' .. '[ ' .. filename .. ' saved @ ' .. os.date() .. ' ]')
+  print('[ ' .. filename .. ' saved @ ' .. os.date() .. ' ]')
 end
 
 return utl
