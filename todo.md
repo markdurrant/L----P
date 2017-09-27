@@ -1,4 +1,4 @@
-- [ ] Figure out module loading. 
+- [ ] Figure out module loading. (inc running examples in examples directory)
 
 - [x] Impliment point
 - [x] Impliment path
