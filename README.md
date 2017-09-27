@@ -1,4 +1,4 @@
-# L----P
+# L-P
 
 Simple SVG generation in Lua
 
@@ -20,5 +20,5 @@ Next clone the repo.
 
 To run Lua SVG simply navigate to the project directory and run the file you wish to draw.
 
-    $ cd /L----P/
+    $ cd /L-P/
     $ luajit main.lua

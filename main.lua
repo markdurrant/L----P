@@ -1,4 +1,4 @@
-require("L----P/L----P")
+require("L-P/L-P")
 
 math.randomseed(os.clock())
 

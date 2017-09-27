@@ -1,6 +1,6 @@
 -- get Utilities & Point modules.
-local utl = require("L----P/utilities")
-require("L----P/point")
+local utl = require("L-P/utilities")
+require("L-P/point")
 
 -- Set up Path class, and set closed to false.
 local pathTable = { label = 'Path', closed = false }

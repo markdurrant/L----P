@@ -1,6 +1,6 @@
 -- get Utilities & Point modules.
-local utl = require("L----P/utilities")
-require("L----P/point")
+local utl = require("L-P/utilities")
+require("L-P/point")
 
 -- Return a new paper with a specified table with width and heighsize.
 function Paper(size)
