@@ -4,7 +4,7 @@ math.randomseed(os.clock())
 
 
 local paper = Paper({ width = 210, height = 297 })
-local black = Pen({ weight = 2, color = "#000" })
+local black = Pen({ weight = 2, color = "#f3b" })
 
 
 local gridSize = 15
