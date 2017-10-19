@@ -239,6 +239,31 @@ function pathTable:render()
   return pathTag
 end
 
+-- Return a G code string for the path
+function pathTable:renderGCode()
+  local gCode = ""
+
+  for i, p in ipairs(self.points) do
+    gCode = gCode .. string.format("\nG1 X%f Y%f", p.x, p.y)
+
+    if i == 1 then
+      gCode = gCode .. "\nM03 S1000"
+    end
+  end
+
+  if self.closed then
+    gCode = gCode .. string.format(
+      "\nG1 X%f Y%f",
+      self.points[1].x,
+      self.points[1].y
+    )
+  end
+
+  gCode = gCode .. "\nM05 S0"
+
+  return gCode
+end
+
 -- Return a string with path information including all child points information.
 function pathTable:getLog()
   local log = string.format("Path { closed  = %s }", self.closed)

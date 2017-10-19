@@ -183,6 +183,24 @@ function penTable:render()
   return penTag
 end
 
+-- Return a G code string for the pen
+function penTable:renderGCode()
+  local gCode = "F4000\nM05 S0\nG1 X0 Y0"
+
+  for _, p in ipairs(self.paths) do
+    gCode = gCode .. "\n" .. p:renderGCode()
+  end
+
+  gCode = gCode .. "\n\nM05 S0\nG1 X0 Y0"
+
+  return gCode
+end
+
+-- Save a G code file for the pen
+function penTable:saveGCode(filename)
+  utl.saveFile(filename, self:renderGCode())
+end
+
 -- Return a string with pen information including all child path information
 function penTable:getLog()
   local log = "Pen "
