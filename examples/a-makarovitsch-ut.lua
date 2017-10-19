@@ -4,14 +4,14 @@ require("../L-P/L-P")
 math.randomseed(os.clock() * 99999999)
 
 
-local paper = Paper({ width = 350, height = 350 })
-local blue = Pen({ weight = 2, color = "#339" })
+local paper = Paper({ width = 210, height = 297 })
+local blue = Pen({ weight = 1, color = "#339" })
 
 
-local margin = 8
-local shapeSize = 60
-local shapeOffset = 6
-local rows = 5
+local margin = 22.5
+local shapeSize = 30
+local shapeOffset = 3
+local rows = 7
 local cols = 5
 
 
@@ -70,4 +70,4 @@ end
 
 
 paper:addPens({ blue })
-paper:saveSvg("a-makarovitsch-ut.svg")
+paper:saveSvg("./examples/a-makarovitsch-ut.svg")

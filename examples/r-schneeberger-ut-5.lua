@@ -49,4 +49,4 @@ local margin = Path({
 }):close():setPen(black)
 
 paper:addPens({ black })
-paper:saveSvg("r-schneeberger-ut-5.svg")
+paper:saveSvg("./examples/r-schneeberger-ut-5.svg")
