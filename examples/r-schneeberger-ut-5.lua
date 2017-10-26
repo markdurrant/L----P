@@ -3,19 +3,19 @@ require("../L-P/L-P")
 math.randomseed(os.clock())
 
 
-local paper = Paper({ width = 297, height = 210 })
-local black = Pen({ weight = 2, color = "#f33" })
+local paper = Paper({ width = 160, height = 160 })
+local black = Pen({ weight = 2, color = "rgba(0, 0, 0, 0.5)" })
 
 
-local gridSize = 10.5
+local gridSize = 20
 local density = 3
 local padding = gridSize / density
 
 
-local rows = 20
-local cols = 25
+local rows = 8
+local cols = 8
 
-local padCells = 4
+local padCells = 1
 
 local function drawCell(x, y)
   local rand = math.random()
@@ -38,9 +38,18 @@ for r = padCells, rows - padCells - 1 do
     local x = c * gridSize
     local y = r * gridSize
 
-    -- drawCell(x, y)
+    drawCell(x, y)
   end
 end
+
+
+-- for _, p in ipairs(black.paths) do
+--   for _, p2 in ipairs(black.paths) do
+--     if p:equalTo(p2) then
+--       print("!")
+--     end
+--   end
+-- end
 
 
 local margin = Path({

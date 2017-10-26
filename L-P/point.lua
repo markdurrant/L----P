@@ -105,6 +105,15 @@ function pointTable:angleTo(point)
   return angle
 end
 
+-- Return true if point is equal to a supplied point
+function pointTable:equalTo(point)
+  if self.x == point.x and self.y == point.y then
+    return true
+  else
+    return false
+  end
+end
+
 -- Return an identical copy of a point.
 function pointTable:clone()
   return utl.clone(self)

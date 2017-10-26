@@ -204,6 +204,23 @@ function pathTable:intersections(path)
   print("not yet implimented")
 end
 
+-- Return true if path is equal to a supplied path
+function pathTable:equalTo(path)
+  local isEqual = true
+
+  if #self.points == #path.points then
+    for i, p in ipairs(self.points) do
+      if not p:equalTo(path.points[i]) then
+        isEqual = false
+      end
+    end
+  else 
+    isEqual = false
+  end
+
+  return isEqual
+end
+
 -- Return an identical copy of a path.
 function pathTable:clone()
   return utl.clone(self)
