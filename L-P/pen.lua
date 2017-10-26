@@ -185,7 +185,7 @@ end
 
 -- Return a G code string for the pen
 function penTable:renderGCode()
-  local gCode = "F4000\nM05 S0\nG1 X0 Y0"
+  local gCode = "F10000\nM05 S0\nG1 X0 Y0"
 
   for _, p in ipairs(self.paths) do
     gCode = gCode .. "\n" .. p:renderGCode()

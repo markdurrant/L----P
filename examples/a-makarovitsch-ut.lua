@@ -4,19 +4,20 @@ require("../L-P/L-P")
 math.randomseed(os.clock() * 99999999)
 
 
-local paper = Paper({ width = 210, height = 297 })
-local blue = Pen({ weight = 1, color = "#339" })
+local paper = Paper({ width = 297, height = 210 })
+local blue = Pen({ weight = 0.75, color = "#339" })
 
 
-local margin = 22.5
-local shapeSize = 30
-local shapeOffset = 3
+local margin = 30
+local shapeSize = 20
+local lineNum = 5
+local shapeOffset = shapeSize / (lineNum * 2)
 local rows = 7
-local cols = 5
+local cols = 10
 
 
 local function drawShape(x, y, rotateX, rotateZ)
-  for i = 1, 5 do
+  for i = 1, lineNum do
     x = x + shapeOffset
     y = y + shapeOffset
 
@@ -68,6 +69,7 @@ end
   end
 -- end
 
+blue:saveGCode("a-makarovitsch-ut.nc")
 
 paper:addPens({ blue })
 paper:saveSvg("./examples/a-makarovitsch-ut.svg")

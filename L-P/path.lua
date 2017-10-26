@@ -259,7 +259,7 @@ function pathTable:renderGCode()
     )
   end
 
-  gCode = gCode .. "\nM05 S0"
+  gCode = gCode .. "\nM05 S1000"
 
   return gCode
 end
