@@ -32,7 +32,7 @@ function Pen(table)
 end
 
 -- Set the pen weight.
-function penTable:setWidth(weight)
+function penTable:setWeight(weight)
   self.weight = weight
 
   return self
