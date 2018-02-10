@@ -184,7 +184,7 @@ function pathTable:pointAtDistance(distance)
     elseif distance >= 0 then
       local angle = self.points[i]:angleTo(self.points[i + 1])
       
-      point = Point:new(self.points[i].x, self.points[i].y):moveVector(angle, distance)
+      point = Point(self.points[i].x, self.points[i].y):moveVector(angle, distance)
       distance = distance - segmentLength
     end
   end

@@ -1,42 +1,61 @@
 require("../L-P/L-P")
 
+math.randomseed(os.time())
 
-local paper = Paper({ width = 210, height = 297 })
-local blue = Pen({ weight = 2, color = "#339" })
+local black = Pen({ weight = 1, color = "#000" })
+local blue = Pen({ weight = 0.5, color = "#0ff" })
+local red = Pen({ weight = 0.5, color = "#f0f" })
+local paper = Paper({ width = 100, height = 140 })
+      paper:addPens({black, red, blue})
 
+local square_size = 49 + math.random() * 2
+      square_size = square_size / 2
 
-local point1 = Point( 50,  50)
-local point2 = Point(150, 150)
-local point3 = Point( 50,  50)
+local square = Path({
+  Point(paper.center.x + square_size, paper.center.y + square_size),
+  Point(paper.center.x + square_size, paper.center.y - square_size),
+  Point(paper.center.x - square_size, paper.center.y - square_size),
+  Point(paper.center.x - square_size, paper.center.y + square_size)
+}):close():setPen(blue)
 
-print("point1 point2: " .. tostring(point1:equalTo(point2)))
-print("point1 point3: " .. tostring(point1:equalTo(point3)))
+local guide_A = Path({
+  square.points[1]:clone():moveVector(math.random() * 360, math.random() * 4),
+  square.points[2]:clone():moveVector(math.random() * 360, math.random() * 4)
+}):close():setPen(red)
 
-local path1 = Path({
-  Point( 50,  50),
-  Point(150,  50),
-  Point(150, 150),
-  Point( 50, 150)
-})
+local guide_B = Path({
+  square.points[4]:clone():moveVector(math.random() * 360, math.random() * 4),
+  square.points[3]:clone():moveVector(math.random() * 360, math.random() * 4)
+}):close():setPen(red)
 
-local path2 = Path({
-  Point(150, 150),
-  Point(250, 150),
-  Point(250, 250)
-})
+local point_list = {}
+local num_lines = 45
+      num_lines = num_lines * 2
 
-local path3 = Path({
-  Point( 50,  50),
-  Point(150,  50),
-  Point(150, 150),
-  Point( 50, 150)
-})
+for l = 0, num_lines + 2 do
+  if l % 2 == 0 then
+    table.insert(
+      point_list,
+      guide_A:pointAtDistance((guide_A:length() / num_lines * l))
+    )
+    table.insert(
+      point_list,
+      guide_B:pointAtDistance((guide_B:length() / num_lines * l))
+    )
+  else 
+    table.insert(
+      point_list,
+      guide_B:pointAtDistance((guide_B:length() / num_lines * l))
+    )
+    table.insert(
+      point_list,
+      guide_A:pointAtDistance((guide_B:length() / num_lines * l))
+    )
+  end
+end
 
-print("path1 path2: " .. tostring(path1:equalTo(path2)))
-print("path1 path3: " .. tostring(path1:equalTo(path3)))
+local snake = Path(point_list):setPen(black)
+      snake:rotate(math.random(0, 1) * 90)
 
-
-blue:saveGCode("main.nc")
-
-paper:addPens({ blue })
+black:saveGCode("main.nc")
 paper:saveSvg("main.svg")
