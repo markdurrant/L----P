@@ -182,7 +182,8 @@ function pen:save_gcode(filename)
   utl.save_file(filename, self:render_gcode())
 end
 
--- Return a string with pen information including all child path information
+-- Return a string with pen information including all child path information.
+-- Used internally.
 function pen:get_log()
   local log = 'Pen '
   local pathLog = ''

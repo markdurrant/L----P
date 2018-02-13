@@ -101,7 +101,7 @@ function point:clone()
   return utl.clone(self)
 end
 
--- Return a string with the X & Y values for the point
+-- Return a string with the X & Y values for the point. Used internally.
 function point:get_log()
   return string.format('Point { x = %s, y = %s }', self.x, self.y)
 end

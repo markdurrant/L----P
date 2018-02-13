@@ -58,21 +58,6 @@ function Paper(size)
   function paper:save_svg(filename)
     utl.save_file(filename, self:render())
   end
-
-  -- Save the the rendered `<SVG>` element in a html document for
-  -- easy previewing. 
-  function paper:save_preview(filename)
-    local html = '<!doctype html><html><head><title>SVG preview</title>' ..
-                 '<style type="text/css"> html { height: 100%; }' ..
-                 'body { display: flex; justify-content: center; ' ..
-                 'align-items: center; height: 100%; margin: 0; ' ..
-                 'background: #ddd; } svg { background: white;' ..
-                 'box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .15);' ..
-                 'border-radius: 1px; } </style></head><body>' .. 
-                 self:render() .. '</body></html>'
-
-    utl.save_file(filename, html)
-  end
   
   -- Return a string with paper information including all child pens
   -- information. Used internally.
