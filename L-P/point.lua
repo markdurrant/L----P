@@ -85,6 +85,25 @@ function point:angle_to(point_2)
   return angle
 end
 
+-- Return true is the point sits on line segment. Used internally.
+-- NEED TO IMPLIMENT TOLLERANCE LEVEL
+function point:is_on_line(line_point_1, line_point_2)
+  local cross_product = 
+    (self.y - line_point_1.y) * (line_point_2.x - line_point_1.x) -
+    (self.x - line_point_1.x) * (line_point_2.y - line_point_1.y)
+  if cross_product ~= 0 then return false end 
+
+  local dot_product = 
+    (self.x - line_point_1.x) * (line_point_2.x - line_point_1.x) +
+    (self.y - line_point_1.y) * (line_point_2.y - line_point_1.y)
+  if dot_product < 0 then return false end
+
+  local squared_distance = line_point_1:distance_to(line_point_2) ^ 2
+  if dot_product > squared_distance then return false end
+
+  return true 
+end
+
 -- Return true if point is equal to a supplied point
 function point:equal_to(point_2)
   if self.x == point_2.x and self.y == point_2.y then
@@ -93,8 +112,6 @@ function point:equal_to(point_2)
     return false
   end
 end
-
--- Return true is point is on line segment
 
 -- Return an identical copy of a point.
 function point:clone()
