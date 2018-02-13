@@ -20,14 +20,18 @@ function draw_dot(point)
   return dot
 end
 
-local line_A = Path({
-  Point(25, 25),  Point(75, 75)
-}):set_pen(blue)
-local point_A = Point(75.0000, 75.0000)
 
+local path_A = Path({
+  Point(30, 30),
+  Point(70, 30),
+  Point(70, 70),
+  Point(30, 70)
+}):close():set_pen(blue)
+
+
+local point_A = Point(70, 60)
 draw_dot(point_A)
 
-print(point_A:is_on_line(line_A.points[1], line_A.points[2]))
-
+print(point_A:is_on_path(path_A))
 
 paper:save_svg('main.svg')

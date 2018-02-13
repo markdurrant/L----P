@@ -104,6 +104,22 @@ function point:is_on_line(line_point_1, line_point_2)
   return true 
 end
 
+function point:is_on_path(path)
+  for i, v in ipairs(path.points) do
+    if i == #path.points then
+      if self:is_on_line(path.points[i], path.points[1]) then
+        return true
+      end 
+    else 
+      if self:is_on_line(path.points[i], path.points[i + 1]) then 
+        return true 
+      end
+    end 
+  end
+
+  return false
+end
+
 -- Return true if point is equal to a supplied point
 function point:equal_to(point_2)
   if self.x == point_2.x and self.y == point_2.y then
