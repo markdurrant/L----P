@@ -1,61 +1,51 @@
-require("../L-P/L-P")
+require('../L-P/L-P')
 
 math.randomseed(os.time())
 
-local black = Pen({ weight = 1, color = "#000" })
-local blue = Pen({ weight = 0.5, color = "#0ff" })
-local red = Pen({ weight = 0.5, color = "#f0f" })
+local black = Pen({ weight = 1, color = '#000' })
+local blue = Pen({ weight = 0.5, color = '#0ff' })
+local red = Pen({ weight = 0.5, color = '#f0f' })
 local paper = Paper({ width = 100, height = 140 })
-      paper:addPens({black, red, blue})
+      paper:add_pens({black, red, blue})
 
-local square_size = 49 + math.random() * 2
-      square_size = square_size / 2
+function fat_line(point_A, point_B)
+  local fatness = 4
+  local num_lines = 100
+  local direction = point_A:angle_to(point_B)
+  local fat_line_points = {}
 
-local square = Path({
-  Point(paper.center.x + square_size, paper.center.y + square_size),
-  Point(paper.center.x + square_size, paper.center.y - square_size),
-  Point(paper.center.x - square_size, paper.center.y - square_size),
-  Point(paper.center.x - square_size, paper.center.y + square_size)
-}):close():setPen(blue)
+  local guide_A = Path({
+    point_A:clone():move_vector(direction + 90, fatness),
+    point_B:clone():move_vector(direction + 90, fatness)
+  })
 
-local guide_A = Path({
-  square.points[1]:clone():moveVector(math.random() * 360, math.random() * 4),
-  square.points[2]:clone():moveVector(math.random() * 360, math.random() * 4)
-}):close():setPen(red)
+  local guide_B = Path({
+    point_A:clone():move_vector(direction - 90, fatness),
+    point_B:clone():move_vector(direction - 90, fatness)
+  })
 
-local guide_B = Path({
-  square.points[4]:clone():moveVector(math.random() * 360, math.random() * 4),
-  square.points[3]:clone():moveVector(math.random() * 360, math.random() * 4)
-}):close():setPen(red)
-
-local point_list = {}
-local num_lines = 45
-      num_lines = num_lines * 2
-
-for l = 0, num_lines + 2 do
-  if l % 2 == 0 then
-    table.insert(
-      point_list,
-      guide_A:pointAtDistance((guide_A:length() / num_lines * l))
-    )
-    table.insert(
-      point_list,
-      guide_B:pointAtDistance((guide_B:length() / num_lines * l))
-    )
-  else 
-    table.insert(
-      point_list,
-      guide_B:pointAtDistance((guide_B:length() / num_lines * l))
-    )
-    table.insert(
-      point_list,
-      guide_A:pointAtDistance((guide_B:length() / num_lines * l))
-    )
+  for i = 0, num_lines do
+    if i % 2 == 0 then
+      table.insert(
+        fat_line_points,
+        guide_A:point_at_distance(guide_A:length() / num_lines * i)
+      )
+    else
+      table.insert(
+        fat_line_points,
+        guide_B:point_at_distance(guide_B:length() / num_lines * i)
+      )
+    end
   end
+
+  return Path(fat_line_points):set_pen(black)
 end
 
-local snake = Path(point_list):setPen(black)
-      snake:rotate(math.random(0, 1) * 90)
+local line_A = Path({
+  paper.center:clone():move(-20, -40),
+  paper.center:clone():move(20, 40)
+}):set_pen(red)
 
-black:saveGCode("main.nc")
-paper:saveSvg("main.svg")
+fat_line(line_A.points[1], line_A.points[2])
+
+paper:save_svg('main.svg')

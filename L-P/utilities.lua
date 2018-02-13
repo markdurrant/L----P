@@ -5,9 +5,7 @@ function utl.clone(original)
   local metatable = getmetatable(original)
   local clone = {}
   
-  if type(original) ~= "table" then
-    return original
-  end 
+  if type(original) ~= "table" then return original end 
 
   for k, v in pairs(original) do
     if type(v) == "table" then
@@ -23,27 +21,25 @@ function utl.clone(original)
 end
 
 -- Append a number of characters to the start of each line of a string.
-function utl.appendToString(str, num, char)
-  local num = num or 1
-  local char = char or " "
-  local indent = char
+function utl.append_to_string(str, num, char)
+  local n = num or 1
+  local c = char or ' '
+  local indent = c
 
-  for _ = 1, num - 1 do
-    indent = indent .. char
+  for _ = 1, n - 1 do
+    indent = indent .. c
   end 
 
-  local newStr = indent .. string.gsub(str, '\n', '\n' .. indent)
-
-  return newStr
+  return indent .. string.gsub(str, '\n', '\n' .. indent)
 end
 
 -- Indent each line of a string by 2 spaces.
 function utl.indent(str)
-  return utl.appendToString(str, 2)
+  return utl.append_to_string(str, 2)
 end
 
 -- Save a file to supplied filename.
-function utl.saveFile(filename, content)
+function utl.save_file(filename, content)
   local output = assert(io.open(filename, 'w'))
         output:write(content)
         output:close()

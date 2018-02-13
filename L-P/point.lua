@@ -1,39 +1,25 @@
 -- get Utilities module
-local utl = require("L-P/utilities")
+local utl = require('L-P/utilities')
 
 -- Set up Point class
-local pointTable = { label = 'Point' }
+local point = { label = 'Point' }
 
 -- Return a new point with optional X & Y
 -- ↓ Not yet imlipmented ↓
 -- If X & Y values are not supplied the center of the paper will be used for X & Y values.
 function Point(x, y)
-  local point = {}
-        point.x = x or 0
-        point.y = y or x or 0
+  local new_point = {}
+        new_point.x = x or 0
+        new_point.y = y or x or 0
 
-  setmetatable(point, { __index = pointTable })
+  setmetatable(new_point, { __index = point })
 
-  return point
-end
-
--- Return a new point using a vector and an optional origin.
--- ↓ Not yet imlipmented ↓
--- If an origin is not supplied the center of the paper will be used as the origin
-function PointFromVector(direction, length, origin)
-  local x = origin.x
-  local y = origin.y
-
-  local point = Point(x, y):moveVector(direction, length)
-
-  return point
+  return new_point
 end
 
 -- Move the Point in X & Y
-function pointTable:move(x, y)
-  if not y then
-    y = x
-  end
+function point:move(x, y)
+  if not y then y = x end
 
   self.x = self.x + x
   self.y = self.y + y
@@ -42,8 +28,8 @@ function pointTable:move(x, y)
 end
 
 -- Move the Point along a vector
-function pointTable:moveVector(direction, length)
-  angle = math.rad(direction - 90) -- rotate counter-clockwise to make 'north' = 0 degrees
+function point:move_vector(direction, length)
+  local angle = math.rad(direction - 90) -- rotate counter-clockwise to make 'north' = 0 degrees
 
   self.x = self.x + math.cos(angle) * length
   self.y = self.y + math.sin(angle) * length
@@ -52,27 +38,27 @@ function pointTable:moveVector(direction, length)
 end
 
 -- Rotate the Point around an origin (point) in degrees
-function pointTable:rotate(angle, point)
+function point:rotate(angle, origin)
   local radians = math.rad(angle)
 
-  local x1 = self.x - point.x
-  local y1 = self.y - point.y
+  local x1 = self.x - origin.x
+  local y1 = self.y - origin.y
 
   local x2 = x1 * math.cos(radians) - y1 * math.sin(radians)
   local y2 = x1 * math.sin(radians) + y1 * math.cos(radians)
 
-  self.x = x2 + point.x
-  self.y = y2 + point.y
+  self.x = x2 + origin.x
+  self.y = y2 + origin.y
 
   return self
 end
 
 -- Return the distance between the Point and a second point.
-function pointTable:distanceTo(point)
-  local a = self.x - point.x
-  local b = self.y - point.y
+function point:distance_to(point_2)
+  local a = self.x - point_2.x
+  local b = self.y - point_2.y
 
-  local distance = 0
+  local distance
 
   if a == 0 then
     distance = b
@@ -86,28 +72,20 @@ function pointTable:distanceTo(point)
 end
 
 -- Return the angle between the point and a second point.
-function pointTable:angleTo(point)
-  local a = self.x - point.x
-  local b = self.y - point.y
+function point:angle_to(point_2)
+  local a = self.x - point_2.x
+  local b = self.y - point_2.y
 
-  local angle = math.atan2(b, a) * 180 / math.pi
+  local angle = math.atan2(b, a) * 180 / math.pi - 90
 
-  if angle < 0 then 
-    angle = angle + 360
-  end
-
-  angle = angle - 90
-
-  if angle < 0 then 
-    angle = 360 + angle
-  end
+  if angle < 0 then angle = angle + 360 end
 
   return angle
 end
 
 -- Return true if point is equal to a supplied point
-function pointTable:equalTo(point)
-  if self.x == point.x and self.y == point.y then
+function point:equal_to(point_2)
+  if self.x == point_2.x and self.y == point_2.y then
     return true
   else
     return false
@@ -115,18 +93,18 @@ function pointTable:equalTo(point)
 end
 
 -- Return an identical copy of a point.
-function pointTable:clone()
+function point:clone()
   return utl.clone(self)
 end
 
 -- Return a string with the X & Y values for the point
-function pointTable:getLog()
-  return string.format("Point { x = %s, y = %s }", self.x, self.y)
+function point:get_log()
+  return string.format('Point { x = %s, y = %s }', self.x, self.y)
 end
 
 -- Print the X & Y values for the point
-function pointTable:log()
-  print(self:getLog())
+function point:log()
+  print(self:get_log())
 end
 
 -- Return Point generator

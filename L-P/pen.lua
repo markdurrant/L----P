@@ -1,96 +1,79 @@
 -- get Utilities & Path modules
-local utl = require("L-P/utilities")
-require("L-P/path")
+local utl = require('L-P/utilities')
+require('L-P/path')
 
 -- Set up Pen class
-local penTable = { label = 'Pen' }
+local pen = { label = 'Pen' }
 
 -- Return a new pen.
 -- Optionally supply a table containing paths, a pen weight (number), and a pen color (Hex triplet).
 function Pen(table)
-  local pen = {}
+  local new_pen = {}
+        new_pen.paths = {}
 
-  setmetatable(pen, { __index = penTable })
+  setmetatable(new_pen, { __index = pen })
 
   if table.paths then
-    pen.paths = table.paths
+    new_pen.paths = table.paths
 
-    pen:setBox()
-  else
-    pen.paths = {}
+    new_pen:set_bounds()
   end
 
-  if table.weight then
-    pen.weight = table.weight
-  end
+  if table.weight then new_pen.weight = table.weight end
+  if table.color then new_pen.color = table.color end
 
-  if table.color then
-    pen.color = table.color
-  end
-
-  return pen
+  return new_pen
 end
 
 -- Set the pen weight.
-function penTable:setWeight(weight)
+function pen:set_weight(weight)
   self.weight = weight
 
   return self
 end
 
 -- Set the pen color (Hex triplet).
-function penTable:setColor(color)
+function pen:set_color(color)
   self.color = color
   
   return self
 end
 
 -- Set the bounding box for the pen. Used internally.
-function penTable:setBox()
+function pen:set_bounds()
   local top = self.paths[1].top
   local bottom = self.paths[1].bottom
   local left = self.paths[1].left
   local right = self.paths[1].right
 
   for _, p in ipairs(self.paths) do
-    if p.top > top then
-      top = p.top
-    end
-    
-    if p.bottom < bottom then
-      top = p.bottom
-    end
-    
-    if p.left < left then
-      left = p.left
-    end
-    
-    if p.right > right then
-      right = p.right
-    end 
+    if p.top > top then top = p.top end
+    if p.bottom < bottom then top = p.bottom end
+    if p.left < left then left = p.left end
+    if p.right > right then right = p.right end 
   end
 
-  local hCenter = left + (right - left) / 2
-  local vCenter = bottom + (top - bottom) / 2
+  local h_center = left + (right - left) / 2
+  local v_center = bottom + (top - bottom) / 2
 
-  self.top          = top
-  self.bottom       = bottom
-  self.left         = left
-  self.right        = right
+  self.top           = top
+  self.bottom        = bottom
+  self.left          = left
+  self.right         = right
 
-  self.topLeft      = Point(left, top)
-  self.topCenter    = Point(hCenter, top)
-  self.topRight     = Point(right, top)  
-  self.middleLeft   = Point(left, vCenter)
-  self.center       = Point(hCenter, vCenter)
-  self.middleRight  = Point(right, vCenter) 
-  self.bottomLeft   = Point(left, bottom)
-  self.bottomCenter = Point(hCenter, bottom)
-  self.bottomRight  = Point(right, bottom)
+  self.top_left      = Point(left, top)
+  self.top_center    = Point(h_center, top)
+  self.top_right     = Point(right, top)  
+  self.middle_left   = Point(left, v_center)
+  self.center        = Point(h_center, v_center)
+  self.middle_right  = Point(right, v_center) 
+  self.bottom_left   = Point(left, bottom)
+  self.bottom_center = Point(h_center, bottom)
+  self.bottom_right  = Point(right, bottom)
 end
 
 -- Add a table of paths to the end of the pen.
-function penTable:addPaths(paths)
+function pen:add_paths(paths)
   for _, p in ipairs(paths) do
     table.insert(self.paths, p)
   end
@@ -99,20 +82,20 @@ function penTable:addPaths(paths)
 end
 
 -- Remove paths from the pen using an index and an optional number of paths.
-function penTable:removePaths(index, number)
+function pen:remove_paths(index, number)
   local n = number or 1
 
   for i = 1, n do
     table.remove(self.paths, index)
   end
   
-  self:setBox()
+  self:set_bounds()
 
   return self
 end
 
 -- Move the pen along the X & Y axes.
-function penTable:move(x, y)
+function pen:move(x, y)
   for _, p in ipairs(self.paths) do
     p:move(x, y)
   end
@@ -121,16 +104,16 @@ function penTable:move(x, y)
 end
 
 -- Move the pen along a vector. 
-function penTable:moveVector(direction, length)
+function pen:move_vector(direction, length)
   for _, p in ipairs(self.paths) do
-    p:moveVector(direction, length)
+    p:move_vector(direction, length)
   end
 
   return self
 end
 
 -- Rotate the Pen clockwise around an optional origin point.
-function penTable:rotate(angle, origin)
+function pen:rotate(angle, origin)
   for _, p in ipairs(self.paths) do
     p:rotate(angle, origin)
   end
@@ -139,7 +122,7 @@ function penTable:rotate(angle, origin)
 end
 
 -- Scale the Pen by a factor.
-function penTable:scale(factor)
+function pen:scale(factor)
   for _, p in ipairs(self.paths) do
     p:scale(factor)
   end
@@ -148,74 +131,70 @@ function penTable:scale(factor)
 end
 
 -- Return an identical copy of a pen.
-function penTable:clone()
+function pen:clone()
   return utl.clone(self)
 end
 
 -- Set the paper that the pen will draw on.
-function penTable:setPaper(paper)
+function pen:set_paper(paper)
   table.insert(paper.pens, self)
 
   return self
 end
 
 -- Return a string of a SVG `<g>` element for the pen containing all child paths.
-function penTable:render()
-  local penTag = ""
-  local style = "stroke-linecap: round; stroke-linejoin: round; fill: none;"
+function pen:render()
+  local pen_tag = ''
+  local style = 'stroke-linecap: round; stroke-linejoin: round; fill: none;'
 
   if self.color then
-    style = string.format("stroke: %s ;", self.color) .. style
+    style = string.format('stroke: %s ;', self.color) .. style
   end
 
   if self.weight then
-    style = string.format("stroke-width: %f; ", self.weight) .. style
+    style = string.format('stroke-width: %f; ', self.weight) .. style
   end
 
   style = 'style="' .. style .. '"'
 
   for _, p in ipairs(self.paths) do
-    penTag = penTag .. "\n" .. p:render()
+    pen_tag = pen_tag .. "\n" .. p:render()
   end
 
-  penTag = "<g " .. style .. ">" .. utl.indent(penTag) .. "\n</g>"
-
-  return penTag
+  return '<g ' .. style .. '>' .. utl.indent(pen_tag) .. '\n</g>'
 end
 
 -- Return a G code string for the pen
-function penTable:renderGCode()
-  local gCode = "F10000\nM05 S0\nG1 X0 Y0"
+function pen:render_gcode()
+  local gCode = 'F10000\nM05 S0\nG1 X0 Y0'
 
   for _, p in ipairs(self.paths) do
-    gCode = gCode .. "\n" .. p:renderGCode()
+    gCode = gCode .. '\n' .. p:render_gcode()
   end
 
-  gCode = gCode .. "\n\nM05 S0\nG1 X0 Y0"
-
-  return gCode
+  return gCode .. '\n\nM05 S0\nG1 X0 Y0'
 end
 
 -- Save a G code file for the pen
-function penTable:saveGCode(filename)
-  utl.saveFile(filename, self:renderGCode())
+function pen:save_gcode(filename)
+  utl.save_file(filename, self:render_gcode())
 end
 
 -- Return a string with pen information including all child path information
-function penTable:getLog()
-  local log = "Pen "
-  local pathLog = ""
+function pen:get_log()
+  local log = 'Pen '
+  local pathLog = ''
 
   if self.weight and self.color then
-    log = log .. string.format("{ width = %f, color = %s }", self.weight, self.color)
+    log = log .. string.format('{ width = %f, color = %s }', self.weight, self.color)
   elseif self.weight then
-    log = log .. string.format("{ width = %f }", self.weight)
+    log = log .. string.format('{ width = %f }', self.weight)
   elseif self.color then
-    log = log .. string.format("{ color = %s }", self.color)
+    log = log .. string.format('{ color = %s }', self.color)
   end
 
   for i, p in ipairs(self.paths) do
-    local pString = string.gsub(p:getLog(), "Path", string.format("\nPath: %d", i))
+    local pString = string.gsub(p:get_log(), 'Path', string.format('\nPath: %d', i))
     pathLog = pathLog .. pString
   end
 
@@ -223,8 +202,8 @@ function penTable:getLog()
 end
 
 -- Print pen information including all child path information
-function penTable:log()
-  print(self:getLog())
+function pen:log()
+  print(self:get_log())
 end
 
 return Pen
