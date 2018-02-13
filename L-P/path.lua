@@ -173,7 +173,8 @@ function path:point_at_distance(distance)
     elseif distance >= 0 then
       local angle = self.points[i]:angle_to(self.points[i + 1])
       
-      point = Point(self.points[i].x, self.points[i].y):move_vector(angle, distance)
+      point = Point(self.points[i].x, self.points[i].y)
+      point:move_vector(angle, distance)
       distance = distance - segment_length
     end
   end
@@ -259,6 +260,7 @@ function path:render_gcode()
 end
 
 -- Return a string with path information including all child points information.
+-- Used internally.
 function path:get_log()
   local log = string.format('Path { closed  = %s }', self.closed)
   local point_log = ""

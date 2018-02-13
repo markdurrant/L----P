@@ -59,12 +59,14 @@ function Paper(size)
     utl.save_file(filename, self:render())
   end
 
-  -- Save the the rendered `<SVG>` element in a html document for easy previewing. 
+  -- Save the the rendered `<SVG>` element in a html document for
+  -- easy previewing. 
   function paper:save_preview(filename)
     local html = '<!doctype html><html><head><title>SVG preview</title>' ..
                  '<style type="text/css"> html { height: 100%; }' ..
-                 'body { display: flex; justify-content: center; align-items:' .. 'center; height: 100%; margin: 0; background: #ddd; }' ..
-                 'svg { background: white;' ..
+                 'body { display: flex; justify-content: center; ' ..
+                 'align-items: center; height: 100%; margin: 0; ' ..
+                 'background: #ddd; } svg { background: white;' ..
                  'box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .15);' ..
                  'border-radius: 1px; } </style></head><body>' .. 
                  self:render() .. '</body></html>'
@@ -72,13 +74,18 @@ function Paper(size)
     utl.save_file(filename, html)
   end
   
-  -- Return a string with paper information including all child pens information. Used internally.
+  -- Return a string with paper information including all child pens
+  -- information. Used internally.
   function paper:get_log()
-    local log = string.format('Paper { width = %d, height = %d }', self.width, self.height)
+    local log = string.format(
+      'Paper { width = %d, height = %d }', self.width, self.height
+    )
     local pen_log = ''
     
     for i, p in ipairs(self.pens) do
-      local pString = string.gsub(p:get_log(), 'Pen', string.format('\nPen: %d', i))
+      local pString = string.gsub(
+        p:get_log(), 'Pen', string.format('\nPen: %d', i)
+      )
 
       pen_log = pen_log .. pString
     end

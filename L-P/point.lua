@@ -6,7 +6,8 @@ local point = { label = 'Point' }
 
 -- Return a new point with optional X & Y
 -- ↓ Not yet imlipmented ↓
--- If X & Y values are not supplied the center of the paper will be used for X & Y values.
+-- If X & Y values are not supplied the center of the paper will be used
+-- for X & Y values.
 function Point(x, y)
   local new_point = {}
         new_point.x = x or 0
@@ -29,7 +30,8 @@ end
 
 -- Move the Point along a vector
 function point:move_vector(direction, length)
-  local angle = math.rad(direction - 90) -- rotate counter-clockwise to make 'north' = 0 degrees
+  -- rotate counter-clockwise to make 'north' = 0 degrees
+  local angle = math.rad(direction - 90) 
 
   self.x = self.x + math.cos(angle) * length
   self.y = self.y + math.sin(angle) * length
@@ -91,6 +93,8 @@ function point:equal_to(point_2)
     return false
   end
 end
+
+-- Return true is point is on line segment
 
 -- Return an identical copy of a point.
 function point:clone()

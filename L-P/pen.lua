@@ -6,7 +6,8 @@ require('L-P/path')
 local pen = { label = 'Pen' }
 
 -- Return a new pen.
--- Optionally supply a table containing paths, a pen weight (number), and a pen color (Hex triplet).
+-- Optionally supply a table containing paths, a pen weight (number), and
+-- a pen color (Hex triplet).
 function Pen(table)
   local new_pen = {}
         new_pen.paths = {}
@@ -142,7 +143,8 @@ function pen:set_paper(paper)
   return self
 end
 
--- Return a string of a SVG `<g>` element for the pen containing all child paths.
+-- Return a string of a SVG `<g>` element for the pen containing all
+-- child paths.
 function pen:render()
   local pen_tag = ''
   local style = 'stroke-linecap: round; stroke-linejoin: round; fill: none;'
@@ -186,7 +188,9 @@ function pen:get_log()
   local pathLog = ''
 
   if self.weight and self.color then
-    log = log .. string.format('{ width = %f, color = %s }', self.weight, self.color)
+    log = log .. string.format(
+      '{ width = %f, color = %s }', self.weight, self.color
+    )
   elseif self.weight then
     log = log .. string.format('{ width = %f }', self.weight)
   elseif self.color then
@@ -194,7 +198,9 @@ function pen:get_log()
   end
 
   for i, p in ipairs(self.paths) do
-    local pString = string.gsub(p:get_log(), 'Path', string.format('\nPath: %d', i))
+    local pString = string.gsub(
+      p:get_log(), 'Path', string.format('\nPath: %d', i)
+    )
     pathLog = pathLog .. pString
   end
 
