@@ -161,22 +161,36 @@ function path:length()
 end
 
 -- Return the point at a specified distance along a path.
--- NEED TO ADD ABILITY TO GET POINT FROM CLOSED PATHS
 function path:point_at_distance(distance)
   local point 
+  local i = 1
 
-  for i = 1, #self.points - 1 do
-    local segment_length = self.points[i]:distance_to(self.points[i + 1])
+  while distance > self:length() do
+    distance = distance - self:length()
+  end 
+
+  while distance > 0 do
+    local segment_length, p2
+    local p1 = self.points[i]
+
+    if self.closed == true and i == #self.points then
+      p2 = self.points[1]
+    else
+      p2 = self.points[i + 1]
+    end 
+
+    segment_length = p1:distance_to(p2)
 
     if distance > segment_length then
       distance = distance - segment_length
     elseif distance >= 0 then
-      local angle = self.points[i]:angle_to(self.points[i + 1])
+      local angle = p1:angle_to(p2)
       
-      point = Point(self.points[i].x, self.points[i].y)
-      point:move_vector(angle, distance)
+      point = p1:clone():move_vector(angle, distance)
       distance = distance - segment_length
     end
+
+    i = i + 1
   end
 
   return point
