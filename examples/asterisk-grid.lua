@@ -3,14 +3,14 @@ require("../L-P/L-P")
 math.randomseed(os.clock() * 99999999)
 
 local black = Pen({ weight = 0.5, color = '#000' })
-local blue = Pen({ weight = 0.375, color = '#0ff' })
+local blue = Pen({ weight = 0.375, color = '#09f' })
 local red = Pen({ weight = 0.375, color = '#f0f' })
-local paper = Paper({ width = 140, height = 100 })
+local paper = Paper({ width = 210, height = 297 })
       paper:add_pens({black, blue, red})
 
 local function draw_asterisk(point, pen)
   local asterisk_points = {}
-  local asterisk_size = 0.25
+  local asterisk_size = 0.75
 
   for i = 0, 4 do
     table.insert(asterisk_points, point:clone():move_vector(360 / 5 * i, asterisk_size))
@@ -65,7 +65,11 @@ function attract_grid_points(grid_points, attractor)
   return grid_points
 end
 
-local square_A = draw_square(paper.center, 60)
+local function random_point(center, size)
+  return center:clone():move(math.random() * size - size / 2, math.random() * size - size / 2)
+end
+
+local square_A = draw_square(paper.center, 80)
 local grid_points = get_grid_points(square_A, 36)
 
 local attractors = {}
@@ -73,7 +77,7 @@ local attractors = {}
 for i = 1, math.random(2, 5) do
   table.insert(
     attractors,
-    paper.center:clone():move(math.random() * 80 - 40, math.random() * 80 - 40)
+    random_point(paper.center, 100)
   )
 end
 
@@ -81,8 +85,21 @@ for _, attractor in ipairs(attractors) do
   attract_grid_points(grid_points, attractor)
 end
 
+local square_B = draw_square(paper.center, 100)
+
+local color_point_A = square_B:point_at_distance(square_B:length() * math.random())
+local color_point_B = square_B:point_at_distance(square_B:length() * math.random())
+
 for _, point in ipairs(grid_points) do
-  draw_asterisk(point, black)
+  local random_tolerance = 0.8 
+  local distance_A = point:distance_to(color_point_A) * (math.random() * random_tolerance + (1 - random_tolerance))
+  local distance_B = point:distance_to(color_point_B) * (math.random() * random_tolerance + (1 - random_tolerance))
+
+  if distance_A > distance_B then
+    draw_asterisk(point, red)
+  else 
+    draw_asterisk(point, blue)
+  end
 end
 
 paper:save_svg('asterisk-grid.svg')
