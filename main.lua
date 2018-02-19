@@ -24,13 +24,11 @@ end
 
 local path_A = Path({
   Point(30, 30),
-  Point(70, 30),
-  Point(70, 70),
-  Point(30, 70)
+  Point(70, 50),
+  Point(50, 50), 
+  Point(40, 10)
 }):close():set_pen(blue)
 
-
-local point_A = path_A:point_at_distance(190)
-draw_dot(point_A)
+print(path_A:intersects_self())
 
 paper:save_svg('main.svg')

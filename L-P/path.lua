@@ -53,6 +53,20 @@ function path:set_bounds()
   self.bottom_right  = Point(right, bottom)
 end
 
+function path:get_segments()
+  local segments = {}
+
+  for i, p in ipairs(self.points) do
+    if i < #self.points then
+      table.insert(segments, {self.points[i], self.points[i + 1]})
+    elseif i == #self.points and self.closed == true then
+      table.insert(segments, {self.points[i], self.points[1]})
+    end 
+  end 
+
+  return segments
+end
+
 -- close the path
 function path:close()
   self.closed = true
@@ -196,10 +210,50 @@ function path:point_at_distance(distance)
   return point
 end
 
+-- detect if two line segments intersect and at what point
+local function line_segment_intersection(line_A_point_A, line_A_point_B, line_B_point_A, line_B_point_B)
+  local denominator = ((line_B_point_B.y - line_B_point_A.y) * (line_A_point_B.x - line_A_point_A.x)) -
+                      ((line_B_point_B.x - line_B_point_A.x) * (line_A_point_B.y - line_A_point_A.y))
+  
+  local a = line_A_point_A.y - line_B_point_A.y
+  local b = line_A_point_A.x - line_B_point_A.x
+  
+  local numerator_A = ((line_B_point_B.x - line_B_point_A.x) * a) - ((line_B_point_B.y - line_B_point_A.y) * b)
+  local numerator_B = ((line_A_point_B.x - line_A_point_A.x) * a) - ((line_A_point_B.y - line_A_point_A.y) * b)
+
+  a = numerator_A / denominator
+  b = numerator_B / denominator
+
+  if denominator == 0 then
+    return false
+  end
+
+  local intersection_point = {
+    x = line_A_point_A.x + (a * (line_A_point_B.x - line_A_point_A.x)),
+    y = line_A_point_A.y + (a * (line_A_point_B.y - line_A_point_A.y))
+  }
+
+  if a > 0 and a < 1 and b > 0 and b < 1 then 
+    return intersection_point
+  else 
+    return false
+  end 
+end
+
 -- Return `true` if the path intersects itself. Return false if not.
--- ↓ Not yet imlipmented ↓
 function path:intersects_self()
-  print('not yet implimented')
+  local intersects_self = false
+  local segments = self:get_segments()
+
+  for _, a in ipairs(segments) do
+    for _, b in ipairs(segments) do
+      if type(line_segment_intersection(a[1], a[2], b[1], b[2])) == 'table' then 
+        intersects_self = true
+      end
+    end 
+  end
+
+  return intersects_self
 end
 
 -- Return a table of points containing the intersections with a specified path.

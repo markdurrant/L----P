@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100.000000" height="100.000000" viewbox="0 0 100.000000 100.000000">  <g style="stroke-width: 0.375000; stroke: #0ff ;stroke-linecap: round; stroke-linejoin: round; fill: none;">  
-    <path d="M 30 30 L70 30 L70 70 L30 70 Z"/>
+    <path d="M 30 30 L70 50 L50 50 L40 10 Z"/>
   </g><g style="stroke-width: 0.375000; stroke: #f0f ;stroke-linecap: round; stroke-linejoin: round; fill: none;">  
-    <path d="M 60 29.25 L60.75 30 L60 30.75 L59.25 30 Z"/>
   </g><g style="stroke-width: 0.500000; stroke: #000 ;stroke-linecap: round; stroke-linejoin: round; fill: none;">  
   </g></svg>
