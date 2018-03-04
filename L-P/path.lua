@@ -179,6 +179,10 @@ function path:point_at_distance(distance)
   local point 
   local i = 1
 
+  if distance == 0 then
+    return self.points[1]:clone()
+  end
+
   while distance > self:length() do
     distance = distance - self:length()
   end 
