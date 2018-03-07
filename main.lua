@@ -1,25 +1,15 @@
 require('../L-P/L-P')
 
-local devRandom = assert(io.open('/dev/random', 'rb')):read()				
-local devSeed = 0
-local random = 0
-        
-local dr = 1
-        		
-while dr < #devRandom and dr < 5 do
-  devSeed = devSeed .. devRandom:byte(dr)
-  dr = dr + 1
-end
-    		
-math.randomseed(tonumber(devSeed))
+math.randomseed(os.clock() * 1000000)
+
 
 local black = Pen({ weight = 0.5, color = '#000' })
-local cyan = Pen({ weight = 0.375, color = '#0ff' })
-local magenta = Pen({ weight = 0.375, color = '#f0f' })
+local cyan = Pen({ weight = 1, color = '#0ff' })
+local magenta = Pen({ weight = 0.6, color = '#f0f' })
 local yellow = Pen({ weight = 0.375, color = '#ff0' })
 
 local paper = Paper({ width = 140, height = 100 })
-      paper:add_pens({black, cyan, magenta, yellow})
+      paper:add_pens({black, magenta, cyan, yellow})
 
 
 local function wiggle_between(line_A, line_B, num_lines)
@@ -29,7 +19,7 @@ local function wiggle_between(line_A, line_B, num_lines)
     if l % 2 == 0 then
       table.insert(
         wiggle_points,
-        line_A:point_at_distance(line_A:length() / num_lines * l)
+        line_B:point_at_distance(line_A:length() / num_lines * l)
       )
     else
       table.insert(
@@ -42,53 +32,110 @@ local function wiggle_between(line_A, line_B, num_lines)
   return Path(wiggle_points)
 end
 
-local function get_blob(num_points, size, variance)
-  if num_points % 2 ~= 0 then num_points = num_points + 1 end
+local function run_between(line_A, line_B, num_lines)
+  local run_points = {}
 
-  local point_list = {}
-
-  for i = 0, num_points - 1 do
-    table.insert(
-      point_list,
-      paper.center:clone():move_vector(360 / num_points * i, size / 2 + math.random() * variance  - variance / 2)
-    )
+  for l = 0, num_lines - 1 do
+    if l % 2 == 0 then
+      table.insert(run_points, line_A:point_at_distance(line_A:length() / (num_lines - 1) * l))
+      table.insert(run_points, line_B:point_at_distance(line_A:length() / (num_lines - 1) * l))
+    else
+      table.insert(run_points, line_B:point_at_distance(line_A:length() / (num_lines - 1) * l))
+      table.insert(run_points, line_A:point_at_distance(line_B:length() / (num_lines - 1) * l))
+    end
   end
 
-  return Path(point_list):close()
+  return Path(run_points)
 end
 
-local function get_blob_lines(blob)
-  local line_A_points = {}
-  local line_B_points = {}
+local function get_filled_rectangle(center, width, height)
+  width = width / 2
+  height = height / 2
 
-  for a = 1, #blob.points / 2 do
-    table.insert(line_A_points, blob.points[a])
-    table.insert(line_B_points, blob.points[#blob.points - a + 1])
+  local line_A = Path({
+    center:clone():move(-width, height),
+    center:clone():move(-width, -height)
+  })
+
+  local line_B = Path({
+    center:clone():move(width, height),
+    center:clone():move(width, -height)
+  })
+
+  return run_between(line_A, line_B, math.floor(line_A:length() * 0.8))
+end
+
+local function get_random_filed_rectangle()
+  local rectangle = get_filled_rectangle(
+    paper.center, math.random(10, 50), math.random(10, 50)
+  ):set_pen(cyan)
+  rectangle:move(math.random(-40, 40), math.random(-30, 30))
+  rectangle:rotate(math.random(0, 360))
+
+  return rectangle
+end
+
+local function is_in_bounds(path)
+  local in_bounds = true
+
+  for _, p in pairs(path.points) do
+    if p.x < 0 or p.x > paper.width or p.y < 0 or p.y > paper.height then
+      in_bounds = false
+    end
   end 
 
-  return {Path(line_A_points), Path(line_B_points)}
+  return in_bounds
 end
 
-local function get_blob_wiggle(num_points, size, variance, num_lines)
-  local blob = get_blob(num_points, size, variance)
-  local blob_lines = get_blob_lines(blob)
-  local blob_line_A = blob_lines[1]
-  local blob_line_B = blob_lines[2]
-  local blob_wiggle = wiggle_between(blob_line_A, blob_line_B, num_lines)
+local function get_grid_rectangle(point, columns, rows)
+  local size = 4
 
-  return blob_wiggle
+  Path({
+    point:clone():move(-columns * size / 2, rows * size / 2),
+    point:clone():move(columns * size / 2, rows * size / 2),
+    point:clone():move(columns * size / 2, -rows * size / 2),
+    point:clone():move(-columns * size / 2, -rows * size / 2)
+  }):close():set_pen(magenta)
+  
+  for c = 1, columns - 1 do
+    Path({
+      point:clone():move(c * size - columns * size / 2, rows * size / 2),
+      point:clone():move(c * size - columns * size / 2, -rows * size / 2)
+    }):set_pen(magenta)
+  end
+  
+  for r = 1, rows - 1 do
+    Path({
+      point:clone():move(columns * size / 2, r * size - rows * size / 2),
+      point:clone():move(-columns * size / 2, r * size - rows * size / 2)
+    }):set_pen(magenta)
+  end
 end
 
-local angle = math.random() * 360
+for _ = 1, math.random(2, 4) do
+  local rectangle = get_random_filed_rectangle()
+  
+  while not is_in_bounds(rectangle) do
+    cyan.paths[#cyan.paths] = nil
+    rectangle = get_random_filed_rectangle()
+  end
+end 
 
-local blob_wiggle_A = get_blob_wiggle(12, 75, 15, 70):set_pen(yellow)
-local blob_wiggle_B = get_blob_wiggle(10, 50, 10, 50):set_pen(magenta)
-      blob_wiggle_B:rotate(120):move_vector(angle, math.random() * 10 + 5)
-local blob_wiggle_C = get_blob_wiggle(8, 25, 5, 25):set_pen(cyan)
-      blob_wiggle_C:rotate(240):move_vector(angle, math.random() * 20 + 10)
+for _ = 1, math.random(1, 2) do
+  get_grid_rectangle(
+    paper.center:clone():move(math.random(-7, 7) * 4, math.random(-7, 7) * 4),
+    math.random(2, 8),
+    math.random(2, 8)
+  )
+end
 
+-- local guide_square_size = 72
+--       guide_square_size = guide_square_size / 2
+-- local guide_square = Path({
+--   Point(paper.center.x - guide_square_size, paper.center.y + guide_square_size),
+--   Point(paper.center.x + guide_square_size, paper.center.y + guide_square_size),
+--   Point(paper.center.x + guide_square_size, paper.center.y - guide_square_size),
+--   Point(paper.center.x - guide_square_size, paper.center.y - guide_square_size)
+-- }):close():set_pen(yellow)
 
-cyan:save_gcode('cyan.nc')
-magenta:save_gcode('magenta.nc')
-yellow:save_gcode('yellow.nc')
 paper:save_svg('main.svg')
